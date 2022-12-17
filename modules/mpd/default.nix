@@ -1,5 +1,7 @@
 { pkgs, lib, config, userModule, ... }:
-let users = config.users.users;
+let 
+  outerConfig = config;
+  users = config.users.users;
 in userModule {
   inherit lib;
   module = { name, config, ... }:
@@ -29,6 +31,7 @@ in userModule {
         wrapProgram $out/bin/mpd \
           --add-flags "${mpdConf}"
       '';
+      inherit (outerConfig.environment) pathsToLink extraOutputsToInstall;
     };
   in {
     options.programs.mpd = {
