@@ -1,7 +1,7 @@
 { pkgs, lib, userModule, ... }:
 userModule {
   inherit lib;
-  module = { config, ... }:
+  module = { name, config, ... }:
   with lib;
   let
     cfg = config.programs.mpd;
@@ -66,7 +66,7 @@ userModule {
       };
       dataDir = mkOption {
         type = types.path;
-        default = "/var/lib/${name}";
+        default = trace name "/home/${name}";
         description = lib.mdDoc ''
           The directory where MPD stores its state, tag cache, playlists etc. If
           left as the default value this directory will automatically be created
