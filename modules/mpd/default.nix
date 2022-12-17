@@ -67,7 +67,7 @@ in userModule {
       };
       dataDir = mkOption {
         type = types.path;
-        default = users.${name}.home;
+        default = "${users.${name}.home}/.config/mpd";
         description = lib.mdDoc ''
           The directory where MPD stores its state, tag cache, playlists etc. If
           left as the default value this directory will automatically be created
