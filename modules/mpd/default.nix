@@ -20,6 +20,15 @@ userModule {
       ${optionalString (cfg.network.port != 6600)  ''port "${toString cfg.network.port}"''}
       ${cfg.extraConfig}
     '';
+    mpd = pkgs.symlinkJoin {
+      name = "mpd";
+      paths = [ pkgs.mpd ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/mpd \
+          --add-flags "${mpdConf}"
+      '';
+    };
   in {
     options.programs.mpd = {
       enable = mkEnableOption "mpd";
@@ -96,7 +105,7 @@ userModule {
       };
     };
     config = mkIf cfg.enable {
-      packages = [ pkgs.mpd ];
+      packages = [ mpd ];
     };
   };
 }
