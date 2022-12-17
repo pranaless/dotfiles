@@ -25,6 +25,7 @@ in userModule {
     '';
     mpd = pkgs.symlinkJoin {
       name = "mpd";
+      # There's gotta be a better way to inherit outputs
       paths = [ pkgs.mpd ] ++ builtins.map (name: pkgs.mpd.${name}) (intersectLists pkgs.mpd.outputs extraOutputs);
       buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''

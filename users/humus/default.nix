@@ -49,6 +49,12 @@
     programs.mpd = {
       enable = true;
       musicDirectory = "/home/humus/@music";
+      extraConfig = ''
+        audio_output {
+          type "pipewire"
+          name "My PipeWire Output"
+        }
+      '';
     };
   };
   
