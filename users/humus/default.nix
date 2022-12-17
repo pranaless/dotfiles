@@ -4,6 +4,7 @@
   users.users.humus = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
+    programs.mpd.enable = true;
   };
   
   home-manager.users.humus = { config, pkgs, ... }: {
@@ -22,7 +23,6 @@
       helix
       imv
       librewolf-wayland
-      mpd
       pavucontrol
       ripgrep
       river
