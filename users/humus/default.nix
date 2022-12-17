@@ -1,6 +1,27 @@
 { pkgs, ... }:
 
 {
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General.Enable = "Source,Sink,Media,Socket";
+    };
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
   users.users.humus = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];

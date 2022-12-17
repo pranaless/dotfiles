@@ -70,28 +70,7 @@
           networking.hostName = "humus";
         })
         ({ pkgs, ... }: {
-          hardware.bluetooth = {
-            enable = true;
-            settings = {
-              General.Enable = "Source,Sink,Media,Socket";
-            };
-          };
-
           networking.networkmanager.enable = true;
-
-          security.rtkit.enable = true;
-          services.pipewire = {
-            enable = true;
-            alsa.enable = true;
-            alsa.support32Bit = true;
-            pulse.enable = true;
-            wireplumber.enable = true;
-          };
-          xdg.portal = {
-            enable = true;
-            wlr.enable = true;
-            extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-          };
 
           services.printing = {
             enable = true;
@@ -102,10 +81,6 @@
             enable = true;
           };
           
-          users.users.papa = {
-            isNormalUser = true;
-          };
-
           environment.systemPackages = with pkgs; [
             winetricks
             wineWowPackages.waylandFull
