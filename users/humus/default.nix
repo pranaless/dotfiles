@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   hardware.bluetooth = {
@@ -48,7 +48,7 @@
     ];
     programs.mpd = {
       enable = true;
-      musicDirectory = "~/@music";
+      musicDirectory = "/home/humus/@music";
     };
   };
   
