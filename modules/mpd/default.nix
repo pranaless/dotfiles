@@ -1,5 +1,6 @@
-{ pkgs, lib, outerConfig, userModule, ... }:
-userModule {
+{ pkgs, lib, config, userModule, ... }:
+let users = config.users.users;
+in userModule {
   inherit lib;
   module = { name, config, ... }:
   with lib;
@@ -66,7 +67,7 @@ userModule {
       };
       dataDir = mkOption {
         type = types.path;
-        default = outerConfig.users.users.${name}.home;
+        default = users.${name}.home;
         description = lib.mdDoc ''
           The directory where MPD stores its state, tag cache, playlists etc. If
           left as the default value this directory will automatically be created
