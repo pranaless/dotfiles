@@ -14,10 +14,14 @@
   outputs = { self, nixpkgs, hyprland, home-manager }: {
     nixosConfigurations.humus = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
+      specialArgs = {
+        userModule = import ./userModule.nix
+      };
       modules = [
         hyprland.nixosModules.default
         home-manager.nixosModules.default
         ./users/humus
+        ./modules/mpd
         {
           nix.settings = {
             experimental-features = [ "nix-command" "flakes" ];
