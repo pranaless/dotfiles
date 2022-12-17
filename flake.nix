@@ -15,7 +15,7 @@
     nixosConfigurations.humus = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       specialArgs = {
-        userModule = import ./userModule.nix
+        userModule = import ./userModule.nix;
       };
       modules = [
         hyprland.nixosModules.default
