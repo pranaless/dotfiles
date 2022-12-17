@@ -46,7 +46,10 @@
       })
       wl-clipboard
     ];
-    programs.mpd.enable = true;
+    programs.mpd = {
+      enable = true;
+      musicDirectory = "~/@music";
+    };
   };
   
   home-manager.users.humus = { config, pkgs, ... }: {
