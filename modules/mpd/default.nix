@@ -1,7 +1,5 @@
 { pkgs, lib, config, userModule, ... }:
-let 
-  outerConfig = config;
-  users = config.users.users;
+let users = config.users.users;
 in userModule {
   inherit lib;
   module = { name, config, ... }:
@@ -14,7 +12,7 @@ in userModule {
       # restart.
       music_directory     "${cfg.musicDirectory}"
       playlist_directory  "${cfg.playlistDirectory}"
-      ${lib.optionalString (cfg.dbFile != null) ''
+      ${optionalString (cfg.dbFile != null) ''
         db_file             "${cfg.dbFile}"
       ''}
       state_file          "${cfg.dataDir}/state"
@@ -26,12 +24,12 @@ in userModule {
     mpd = pkgs.symlinkJoin {
       name = "mpd";
       paths = [ pkgs.mpd ];
+      outputs = pkgs.mpd.outputs;
       buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/mpd \
           --add-flags "${mpdConf}"
       '';
-      inherit (outerConfig.environment) pathsToLink extraOutputsToInstall;
     };
   in {
     options.programs.mpd = {
