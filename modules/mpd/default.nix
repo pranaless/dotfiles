@@ -1,5 +1,7 @@
 { pkgs, lib, config, userModule, ... }:
-let users = config.users.users;
+let
+  extraOutputs = config.environment.extraOutputsToInstall;
+  users = config.users.users;
 in userModule {
   inherit lib;
   module = { name, config, ... }:
@@ -23,8 +25,7 @@ in userModule {
     '';
     mpd = pkgs.symlinkJoin {
       name = "mpd";
-      paths = [ pkgs.mpd ];
-      outputs = pkgs.mpd.outputs;
+      paths = [ pkgs.mpd ] ++ builtins.map (name: pkgs.mpd.${name}) (intersectLists pkgs.mpd.outputs extraOutputs);
       buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/mpd \
