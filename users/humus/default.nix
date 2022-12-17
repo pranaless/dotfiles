@@ -1,17 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   users.users.humus = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    programs.mpd.enable = true;
-  };
-  
-  home-manager.users.humus = { config, pkgs, ... }: {
-    home.stateVersion = "22.05";
-
-    imports = [ ../../modules ];
-    home.packages = with pkgs; [
+    packages = with pkgs; [
       bc
       brightnessctl
       cozette
@@ -32,7 +25,14 @@
       })
       wl-clipboard
     ];
-    
+    programs.mpd.enable = true;
+  };
+  
+  home-manager.users.humus = { config, pkgs, ... }: {
+    home.stateVersion = "22.05";
+
+    imports = [ ../../modules ];
+
     home.pointerCursor = {
       package = pkgs.nordzy-cursor-theme;
       name = "Nordzy-cursors";
