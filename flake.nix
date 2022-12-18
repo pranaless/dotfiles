@@ -20,8 +20,8 @@
       modules = [
         hyprland.nixosModules.default
         home-manager.nixosModules.default
+        ./modules
         ./users/humus
-        ./modules/mpd
         {
           nix.settings = {
             experimental-features = [ "nix-command" "flakes" ];
