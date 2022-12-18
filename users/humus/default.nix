@@ -32,6 +32,7 @@
       fd
       fira-code
       eww-wayland
+      foot
       git
       grim
       helix
@@ -81,7 +82,7 @@
       enable = true;
     };
     
-    modules.foot.enable = true;
+    # modules.foot.enable = true;
     # modules.git.enable = true;
   };
 }
