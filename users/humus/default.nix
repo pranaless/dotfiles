@@ -56,6 +56,7 @@
         }
       '';
     };
+    programs.ncmpcpp.enable = true;
   };
   
   home-manager.users.humus = { config, pkgs, ... }: {
