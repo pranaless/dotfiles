@@ -3,7 +3,6 @@
 {
   imports = [
     ./audio/mpd.nix
-    ./foot
-    ./git
+    ./audio/ncmpcpp.nix
   ];
 }

@@ -11,6 +11,6 @@ userModule {
     };
     config = mkIf cfg.enable {
       packages = [ pkgs.ncmpcpp ];
-    }
-  }
+    };
+  };
 }

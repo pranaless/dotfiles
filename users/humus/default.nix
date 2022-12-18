@@ -63,7 +63,7 @@
   home-manager.users.humus = { config, pkgs, ... }: {
     home.stateVersion = "22.05";
 
-    imports = [ ../../modules ];
+    # imports = [ ../../modules ];
 
     home.pointerCursor = {
       package = pkgs.nordzy-cursor-theme;
