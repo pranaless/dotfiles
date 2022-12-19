@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./audio/mpd.nix
-    ./audio/ncmpcpp.nix
+    ./programs/mpd.nix
+    ./programs/ncmpcpp.nix
   ];
 }
