@@ -1,4 +1,5 @@
-{ module, lib, ... }: 
+module:
+{ lib, ... }: 
 with lib;
 {
   options.users.users = mkOption {
