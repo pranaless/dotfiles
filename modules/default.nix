@@ -2,7 +2,7 @@
   home-manager.sharedModules = [
     {
       imports = [
-        ./themes.nix
+        ./theme.nix
       ];
     }
   ];

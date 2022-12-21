@@ -15,8 +15,8 @@
   let
     mkHost = self.lib.mkHost;
   in {
-    lib = import ./lib.nix inputs;
-    
+    lib = import ./lib inputs;
+  
     nixosConfigurations = mkHost {
       hostName = "humus";
       system = "x86_64-linux";

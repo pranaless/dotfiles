@@ -52,6 +52,14 @@
       })
       wl-clipboard
     ];
+    
+    theme = {
+      font = {
+        package = pkgs.cozette;
+        name = "Cozette";
+        size = 10;
+      };
+    };
 
     home.pointerCursor = {
       package = pkgs.nordzy-cursor-theme;
