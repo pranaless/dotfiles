@@ -1,6 +1,9 @@
 {
-  imports = [
-    ./programs/mpd.nix
-    ./programs/ncmpcpp.nix
+  home-manager.sharedModules = [
+    {
+      imports = [
+        ./themes.nix
+      ];
+    }
   ];
 }

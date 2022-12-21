@@ -11,22 +11,19 @@
     };
   };
 
-  outputs = { self, nixpkgs, hyprland, home-manager }: {
-    nixosConfigurations.humus = nixpkgs.lib.nixosSystem rec {
+  outputs = { self, nixpkgs, home-manager, hyprland }@inputs:
+  let
+    mkHost = self.lib.mkHost;
+  in {
+    lib = import ./lib.nix inputs;
+    
+    nixosConfigurations = mkHost {
+      hostName = "humus";
       system = "x86_64-linux";
-      specialArgs = {
-        userModule = import ./userModule.nix;
-      };
       modules = [
         hyprland.nixosModules.default
-        home-manager.nixosModules.default
-        ./modules
         ./users/humus
         {
-          nix.settings = {
-            experimental-features = [ "nix-command" "flakes" ];
-            sandbox = true;
-          };
           nixpkgs.config.allowUnfree = true;
           nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
             "osu-lazer"
@@ -34,18 +31,11 @@
           ];
           # system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           system.stateVersion = "22.05";
-          home-manager = {
-            useUserPackages = true;
-            useGlobalPkgs = true;
-          };
         }
         ({ pkgs, ... }: {
           imports = [ # Include the results of the hardware scan.
             ./hardware-configuration.nix
           ];
-
-          boot.loader.systemd-boot.enable = true;
-          boot.loader.efi.canTouchEfiVariables = true;
 
           # Not sure if this actually helps?
           boot.initrd.availableKernelModules = [
@@ -66,8 +56,6 @@
 
           time.timeZone = "UTC";
           i18n.defaultLocale = "en_US.UTF-8";
-
-          networking.hostName = "humus";
         })
         ({ pkgs, ... }: {
           networking.networkmanager.enable = true;

@@ -25,7 +25,12 @@
   users.users.humus = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    packages = with pkgs; [
+  };
+  
+  home-manager.users.humus = { config, pkgs, ... }: {
+    home.stateVersion = "22.05";
+
+    home.packages = with pkgs; [
       bc
       brightnessctl
       cozette
@@ -47,23 +52,6 @@
       })
       wl-clipboard
     ];
-    programs.mpd = {
-      enable = true;
-      musicDirectory = "/home/humus/@music";
-      extraConfig = ''
-        audio_output {
-          type "pipewire"
-          name "My PipeWire Output"
-        }
-      '';
-    };
-    programs.ncmpcpp.enable = true;
-  };
-  
-  home-manager.users.humus = { config, pkgs, ... }: {
-    home.stateVersion = "22.05";
-
-    # imports = [ ../../modules ];
 
     home.pointerCursor = {
       package = pkgs.nordzy-cursor-theme;
@@ -73,11 +61,21 @@
     
     services.syncthing.enable = true;
     
-    programs.gpg = {
-      enable = true;
-      homedir = "${config.xdg.dataHome}/gnupg";
-    };
+    programs.gpg.enable = true;
+    services.gpg-agent.enable = true;
     
+    services.mpd = {
+      enable = true;
+      musicDirectory = "${config.home.homeDirectory}/@music";
+      extraConfig = ''
+        audio_output {
+          type "pipewire"
+          name "My PipeWire Output"
+        }
+      '';
+    };
+    programs.ncmpcpp.enable = true;
+
     xdg = {
       enable = true;
     };
