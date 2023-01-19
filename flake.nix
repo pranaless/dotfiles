@@ -11,13 +11,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland }:
   let
-    mkHost = self.lib.mkHost;
+    lib = import ./lib {
+      inherit self home-manager;
+      lib = nixpkgs.lib.extend (self: super: {
+        dl = lib;
+      });
+    };
   in {
-    lib = import ./lib inputs;
+    inherit lib;
   
-    nixosConfigurations = mkHost {
+    nixosConfigurations = lib.mkHost {
       hostName = "humus";
       system = "x86_64-linux";
       modules = [
@@ -29,7 +34,6 @@
             "osu-lazer"
             "steam"
           ];
-          # system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
           system.stateVersion = "22.05";
         }
         ({ pkgs, ... }: {

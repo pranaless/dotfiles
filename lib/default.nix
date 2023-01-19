@@ -1,13 +1,13 @@
-{ self, nixpkgs, home-manager, ... }@inputs:
+{ self, lib, home-manager }:
+with lib;
 {
-  types = import ./types.nix inputs;
   mkHost = {
     hostName,
     system,
     modules ? {}
   }:
   {
-    ${hostName} = nixpkgs.lib.nixosSystem {
+    ${hostName} = nixosSystem {
       inherit system;
       modules = [
         home-manager.nixosModules.default
@@ -27,6 +27,8 @@
               useUserPackages = true;
               useGlobalPkgs = true;
             };
+
+            # system.configurationRevision = mkIf (self ? rev) self.rev;
 
             boot.loader.systemd-boot.enable = true;
             boot.loader.efi.canTouchEfiVariables = true;

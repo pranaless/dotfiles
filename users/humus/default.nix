@@ -33,7 +33,6 @@
     home.packages = with pkgs; [
       bc
       brightnessctl
-      cozette
       fd
       fira-code
       eww-wayland
@@ -76,6 +75,7 @@
       enable = true;
       musicDirectory = "${config.home.homeDirectory}/@music";
       extraConfig = ''
+        volume_normalization "yes"
         audio_output {
           type "pipewire"
           name "My PipeWire Output"
