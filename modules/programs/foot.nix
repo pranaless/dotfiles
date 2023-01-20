@@ -13,7 +13,7 @@ with lib;
     cfg = config.programs.foot;
     theme = config.theme.foot;
   in mkIf (cfg.enable && cfg.useTheme) {
-    programs.foot.settings = mkDefault {
+    programs.foot.settings = {
       main = {
         font = mkIf (theme.font != null) "${theme.font.name}:size=${toString theme.font.size}"; # FIXME: handle fonts more robustly
         dpi-aware = "yes";

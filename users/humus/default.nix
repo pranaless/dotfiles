@@ -54,6 +54,8 @@
     ];
     
     theme = {
+      name = "apprentice";
+    
       terminal = {
         font = {
           name = "Cozette";
@@ -81,6 +83,10 @@
           foreground = "bcbcbc";
           background = "262626";
         };
+      };
+
+      helix = {
+        name = "nord";
       };
     };
 
@@ -123,8 +129,8 @@
 
     programs.helix = {
       enable = true;
+      useTheme = true;
       settings = {
-        theme = "nord";
         editor.line-number = "relative";
       };
     };

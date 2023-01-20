@@ -3,7 +3,7 @@
 with lib;
 {
   options.theme.helix = {
-    # TODO
+    name = dlib.super options.theme.name;
   };
   options.programs.helix.useTheme = mkOption {
     type = types.bool;
@@ -15,6 +15,8 @@ with lib;
     cfg = config.programs.helix;
     theme = config.theme.helix;
   in mkIf (cfg.enable && cfg.useTheme) {
-    programs.helix.settings = mkDefault { };
+    programs.helix.settings = {
+      theme = theme.name;
+    };
   };
 }
