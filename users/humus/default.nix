@@ -50,6 +50,7 @@
         useHardenedMalloc = false;
       })
       wl-clipboard
+      wlsunset
     ];
     
     theme = {
