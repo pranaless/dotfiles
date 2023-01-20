@@ -119,6 +119,14 @@
       enable = true;
       useTheme = true;
     };
+
+    programs.helix = {
+      enable = true;
+      settings = {
+        theme = "nord";
+        editor.line-number = "relative";
+      };
+    };
     
     # modules.git.enable = true;
   };
