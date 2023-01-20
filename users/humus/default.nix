@@ -105,7 +105,7 @@
     programs.ncmpcpp = {
       enable = true;
       settings = {
-        user_interface = "alternate";
+        user_interface = "alternative";
       };
     };
 
