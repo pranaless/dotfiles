@@ -96,7 +96,6 @@
       useTheme = true;
     };
     
-    # modules.foot.enable = true;
     # modules.git.enable = true;
   };
 }
