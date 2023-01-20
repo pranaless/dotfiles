@@ -1,14 +1,14 @@
-{ pkgs, lib, dlib, config, ... }:
+{ pkgs, lib, dlib, config, options, ... }:
 
 with lib;
 {
   options.theme.foot = 
-  let cfg = config.theme;
+  let
+    opt = options.theme;
+    cfg = config.theme;
   in {
-    font = mkOption {
-      type = types.nullOr hm.types.fontType;
-      default = cfg.font;
-    };
+    font = dlib.options.super opt.font;
+    colors = dlib.options.superRecursive opt.terminal.colors;
   };
   options.programs.foot.useTheme = mkOption {
     type = types.bool;
@@ -36,26 +36,18 @@ with lib;
         blink = "no";
         color = "262626 bcbcbc";
       };
-      colors = {
-        foreground = "bcbcbc";
-        background = "262626";
-        regular0 = "1c1c1c";
-        regular1 = "af5f5f";
-        regular2 = "5f875f";
-        regular3 = "87875f";
-        regular4 = "5f87af";
-        regular5 = "5f5f87";
-        regular6 = "5f8787";
-        regular7 = "6c6c6c";
-        bright0 = "444444";
-        bright1 = "ff8700";
-        bright2 = "87af87";
-        bright3 = "ffffaf";
-        bright4 = "87afd7";
-        bright5 = "8787af";
-        bright6 = "5fafaf";
-        bright7 = "ffffff";
-      };
+      colors = let cfg = theme.colors;
+      in mkMerge [
+        (mkIf (cfg.palette != null)
+          (listToAttrs (imap0 (i: c: {
+            name = if i <= 7 then "regular${toString i}" else "bright${toString (i - 8)}";
+            value = c;
+          }) cfg.palette)))
+        {
+          foreground = mkIf (cfg.foreground != null) cfg.foreground;
+          background = mkIf (cfg.background != null) cfg.background;
+        }
+      ];
     };
   };
 }

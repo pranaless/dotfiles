@@ -1,6 +1,9 @@
 { self, lib, home-manager }:
 with lib;
 {
+  types = import ./types.nix { inherit lib; };
+  options = import ./options.nix { inherit lib; };
+
   mkHost = {
     hostName,
     system,
