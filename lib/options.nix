@@ -9,5 +9,5 @@ rec {
     };
   in if isOption opt
     then leaf opt
-    else mapAttrsRecursiveCond (v : ! isOption v) (_: v: super v) opt;
+    else mapAttrsRecursiveCond (v : ! isOption v) (_: v: leaf v) opt;
 }
