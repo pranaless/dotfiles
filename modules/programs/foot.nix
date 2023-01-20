@@ -2,14 +2,7 @@
 
 with lib;
 {
-  options.theme.foot = 
-  let
-    opt = options.theme;
-    cfg = config.theme;
-  in {
-    font = dlib.options.super opt.font;
-    colors = dlib.options.superRecursive opt.terminal.colors;
-  };
+  options.theme.foot = dlib.options.super options.theme.terminal;
   options.programs.foot.useTheme = mkOption {
     type = types.bool;
     default = false;

@@ -1,4 +1,4 @@
-{ pkgs, lib, dlib, config, ... }:
+{ pkgs, lib, dlib, config, options, ... }:
 
 with lib;
 let
@@ -14,6 +14,8 @@ let
   };
 in {
   options.theme.terminal = {
+    font = dlib.options.super options.theme.font;
+  
     colors = {
       palette = mkOption {
         type = types.nullOr (types.uniq (dlib.types.exactListOf dlib.types.color 16));
