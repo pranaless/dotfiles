@@ -53,31 +53,33 @@
     ];
     
     theme = {
-      font = {
-        name = "Cozette";
-        size = 10;
-      };
-      terminal.colors = {
-        palette = [
-          "1c1c1c"
-          "af5f5f"
-          "5f875f"
-          "87875f"
-          "5f87af"
-          "5f5f87"
-          "5f8787"
-          "6c6c6c"
-          "444444"
-          "ff8700"
-          "87af87"
-          "ffffaf"
-          "87afd7"
-          "8787af"
-          "5fafaf"
-          "ffffff"
-        ];
-        foreground = "bcbcbc";
-        background = "262626";
+      terminal = {
+        font = {
+          name = "Cozette";
+          size = 10;
+        };
+        colors = {
+          palette = [
+            "1c1c1c"
+            "af5f5f"
+            "5f875f"
+            "87875f"
+            "5f87af"
+            "5f5f87"
+            "5f8787"
+            "6c6c6c"
+            "444444"
+            "ff8700"
+            "87af87"
+            "ffffaf"
+            "87afd7"
+            "8787af"
+            "5fafaf"
+            "ffffff"
+          ];
+          foreground = "bcbcbc";
+          background = "262626";
+        };
       };
     };
 
