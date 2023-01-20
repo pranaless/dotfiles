@@ -36,7 +36,6 @@
       fd
       fira-code
       eww-wayland
-      foot
       git
       grim
       helix
@@ -90,6 +89,11 @@
 
     xdg = {
       enable = true;
+    };
+
+    programs.foot = {
+      enable = true;
+      useTheme = true;
     };
     
     # modules.foot.enable = true;

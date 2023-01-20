@@ -1,23 +1,28 @@
 { pkgs, lib, dlib, config, ... }:
 
 with lib;
-let cfg = config.theme.foot;
-in {
-  options.theme.foot = {
+{
+  options.theme.foot = 
+  let cfg = config.theme;
+  in {
     font = mkOption {
       type = types.nullOr hm.types.fontType;
-      default = config.theme.font;
+      default = cfg.font;
     };
   };
   options.programs.foot.useTheme = mkOption {
     type = types.bool;
-    default = true;
+    default = false;
   };
   
-  config = mkIf config.programs.foot.useTheme {
+  config =
+  let
+    cfg = config.programs.foot;
+    theme = config.theme.foot;
+  in mkIf (cfg.enable && cfg.useTheme) {
     programs.foot.settings = mkDefault {
       main = {
-        font = mkIf (cfg.font != null) "${cfg.font.name}:size=${toString cfg.font.size}"; # FIXME: handle fonts more robustly
+        font = mkIf (theme.font != null) "${theme.font.name}:size=${toString theme.font.size}"; # FIXME: handle fonts more robustly
         dpi-aware = "yes";
         bold-text-in-bright = "no";
       };
