@@ -28,7 +28,7 @@ with lib;
               useGlobalPkgs = true;
             };
 
-            # system.configurationRevision = mkIf (self ? rev) self.rev;
+            system.configurationRevision = mkIf (self ? rev) self.rev;
 
             boot.loader.systemd-boot.enable = true;
             boot.loader.efi.canTouchEfiVariables = true;
