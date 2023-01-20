@@ -33,6 +33,7 @@
     home.packages = with pkgs; [
       bc
       brightnessctl
+      cozette
       fd
       fira-code
       eww-wayland
@@ -53,7 +54,6 @@
     
     theme = {
       font = {
-        package = pkgs.cozette;
         name = "Cozette";
         size = 10;
       };
