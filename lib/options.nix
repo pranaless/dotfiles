@@ -6,6 +6,7 @@ rec {
   let
     leaf = v: v // {
       default = v.value;
+      defaultText = literalExpression (concatStringsSep "." v.loc);
     };
   in if isOption opt
     then leaf opt
