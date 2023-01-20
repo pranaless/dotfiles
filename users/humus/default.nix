@@ -81,7 +81,12 @@
         }
       '';
     };
-    programs.ncmpcpp.enable = true;
+    programs.ncmpcpp = {
+      enable = true;
+      settings = {
+        user_interface = "alternate";
+      };
+    };
 
     xdg = {
       enable = true;
