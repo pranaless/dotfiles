@@ -2,7 +2,7 @@
 
 with lib;
 {
-  options.theme.foot = dlib.options.super options.theme.terminal;
+  options.theme.foot = dlib.super options.theme.terminal;
   options.programs.foot.useTheme = mkOption {
     type = types.bool;
     default = false;

@@ -14,7 +14,7 @@ let
   };
 in {
   options.theme.terminal = {
-    font = dlib.options.super options.theme.font;
+    font = dlib.super options.theme.font;
   
     colors = {
       palette = mkOption {
