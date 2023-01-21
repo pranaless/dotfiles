@@ -12,10 +12,16 @@ with lib;
   let
     cfg = config.programs.foot;
     theme = config.theme.foot;
+    mkIfNotNull = v: mkIf (v != null) v;
   in mkIf (cfg.enable && cfg.useTheme) {
     programs.foot.settings = {
       main = {
         font = mkIf (theme.font != null) "${theme.font.name}:size=${toString theme.font.size}"; # FIXME: handle fonts more robustly
+      };
+      scrollback = let cfg = theme.scrollback;
+      in {
+        lines = mkIfNotNull cfg.lines;
+        multiplier = mkIfNotNull cfg.multiplier;
       };
       colors = let cfg = theme.colors;
       in mkMerge [
@@ -25,8 +31,8 @@ with lib;
             value = c;
           }) cfg.palette)))
         {
-          foreground = mkIf (cfg.foreground != null) cfg.foreground;
-          background = mkIf (cfg.background != null) cfg.background;
+          foreground = mkIfNotNull cfg.foreground;
+          background = mkIfNotNull cfg.background;
         }
       ];
     };

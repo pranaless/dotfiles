@@ -22,5 +22,16 @@ in {
         default = null;
       };
     } // defaultColors;
+
+    scrollback = {
+      lines = mkOption {
+        type = types.nullOr types.int;
+        default = null;
+      };
+      multiplier = mkOption {
+        type = types.nullOr types.number;
+        default = null;
+      };
+    };
   };
 }

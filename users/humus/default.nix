@@ -82,6 +82,10 @@
           foreground = "bcbcbc";
           background = "262626";
         };
+        scrollback = {
+          lines = 2000;
+          multiplier = 4.0;
+        };
       };
 
       helix = {
@@ -130,8 +134,6 @@
           bold-text-in-bright = "no";
         };
         scrollback = {
-          lines = 2000;
-          multiplier = 4.0;
           indicator-position = "none";
         };
         cursor = {
