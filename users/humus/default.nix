@@ -143,6 +143,9 @@
         cursor = {
           color = "262626 bcbcbc";
         };
+        colors = {
+          alpha = 0.5;
+        };
       };
     };
 
