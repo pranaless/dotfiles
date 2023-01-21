@@ -52,8 +52,8 @@
       wlsunset
     ];
     
-    theme = {
-      name = "apprentice";
+    settings = {
+      theme = "apprentice";
     
       terminal = {
         font = {
@@ -127,7 +127,7 @@
 
     programs.foot = {
       enable = true;
-      useTheme = true;
+      useSettings = true;
       settings = {
         main = {
           dpi-aware = "yes";
@@ -146,7 +146,7 @@
 
     programs.helix = {
       enable = true;
-      useTheme = true;
+      useSettings = true;
       settings = {
         editor.line-number = "relative";
       };

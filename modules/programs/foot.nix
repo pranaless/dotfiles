@@ -2,37 +2,34 @@
 
 with lib;
 {
-  options.theme.foot = dlib.super options.theme.terminal;
-  options.programs.foot.useTheme = mkOption {
+  options.settings.foot = dlib.super options.settings.terminal;
+  options.programs.foot.useSettings = mkOption {
     type = types.bool;
     default = false;
   };
   
   config =
   let
-    cfg = config.programs.foot;
-    theme = config.theme.foot;
+    cfg = config.settings.foot;
     mkIfNotNull = v: mkIf (v != null) v;
-  in mkIf (cfg.enable && cfg.useTheme) {
+  in mkIf (config.programs.foot.enable && config.programs.foot.useSettings) {
     programs.foot.settings = {
       main = {
-        font = mkIf (theme.font != null) "${theme.font.name}:size=${toString theme.font.size}"; # FIXME: handle fonts more robustly
+        font = mkIf (cfg.font != null) "${cfg.font.name}:size=${toString cfg.font.size}"; # FIXME: handle fonts more robustly
       };
-      scrollback = let cfg = theme.scrollback;
-      in {
-        lines = mkIfNotNull cfg.lines;
-        multiplier = mkIfNotNull cfg.multiplier;
+      scrollback = {
+        lines = mkIfNotNull cfg.scrollback.lines;
+        multiplier = mkIfNotNull cfg.scrollback.multiplier;
       };
-      colors = let cfg = theme.colors;
-      in mkMerge [
-        (mkIf (cfg.palette != null)
+      colors = mkMerge [
+        (mkIf (cfg.colors.palette != null)
           (listToAttrs (imap0 (i: c: {
             name = if i <= 7 then "regular${toString i}" else "bright${toString (i - 8)}";
             value = c;
-          }) cfg.palette)))
+          }) cfg.colors.palette)))
         {
-          foreground = mkIfNotNull cfg.foreground;
-          background = mkIfNotNull cfg.background;
+          foreground = mkIfNotNull cfg.colors.foreground;
+          background = mkIfNotNull cfg.colors.background;
         }
       ];
     };

@@ -5,7 +5,7 @@ with lib;
     ./terminal.nix
   ];
 
-  options.theme = {
+  options.settings = {
     font = mkOption {
       # The same as hm.types.fontType, except without the package option.
       # Since the above option is super-ed all over the place, keeping track of
@@ -31,7 +31,7 @@ with lib;
       default = null;
     };
 
-    name = mkOption {
+    theme = mkOption {
       type = types.str;
       example = "nord";
       description = "The name of the theme, used as a file name in some places.";

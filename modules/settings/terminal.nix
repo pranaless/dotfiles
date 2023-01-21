@@ -13,8 +13,8 @@ let
     };
   };
 in {
-  options.theme.terminal = {
-    font = dlib.super options.theme.font;
+  options.settings.terminal = {
+    font = dlib.super options.settings.font;
   
     colors = {
       palette = mkOption {

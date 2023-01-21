@@ -2,7 +2,7 @@
   home-manager.sharedModules = [
     {
       imports = [
-        ./themes
+        ./settings
         ./programs/foot.nix
         ./programs/helix.nix
       ];

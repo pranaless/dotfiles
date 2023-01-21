@@ -2,27 +2,26 @@
 
 with lib;
 {
-  options.theme.helix = {
-    name = dlib.super options.theme.name;
+  options.settings.helix = {
+    name = dlib.super options.settings.theme;
     theme = mkOption {
       type = types.nullOr (pkgs.formats.toml {}).type;
       default = null;
     };
   };
-  options.programs.helix.useTheme = mkOption {
+  options.programs.helix.useSettings = mkOption {
     type = types.bool;
     default = false;
   };
 
   config =
   let
-    cfg = config.programs.helix;
-    theme = config.theme.helix;
-  in mkIf (cfg.enable && cfg.useTheme) {
+    cfg = config.settings.helix;
+  in mkIf (config.programs.helix.enable && config.programs.helix.useSettings) {
     programs.helix = {
-      themes.${theme.name} = mkIf (theme.theme != null) theme.theme;
+      themes.${cfg.name} = mkIf (cfg.theme != null) cfg.theme;
       settings = {
-        theme = theme.name;
+        theme = cfg.name;
       };
     };
   };
