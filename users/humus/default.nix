@@ -39,7 +39,6 @@
       eww-wayland
       git
       grim
-      helix
       imv
       librewolf-wayland
       pavucontrol
@@ -125,6 +124,22 @@
     programs.foot = {
       enable = true;
       useTheme = true;
+      settings = {
+        main = {
+          dpi-aware = "yes";
+          bold-text-in-bright = "no";
+        };
+        scrollback = {
+          lines = 2000;
+          multiplier = 4.0;
+          indicator-position = "none";
+        };
+        cursor = {
+          style = "beam";
+          blink = "no";
+          color = "262626 bcbcbc";
+        };
+      };
     };
 
     programs.helix = {

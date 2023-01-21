@@ -16,18 +16,6 @@ with lib;
     programs.foot.settings = {
       main = {
         font = mkIf (theme.font != null) "${theme.font.name}:size=${toString theme.font.size}"; # FIXME: handle fonts more robustly
-        dpi-aware = "yes";
-        bold-text-in-bright = "no";
-      };
-      scrollback = {
-        lines = 2000;
-        multiplier = 4.0;
-        indicator-position = "none";
-      };
-      cursor = {
-        style = "beam";
-        blink = "no";
-        color = "262626 bcbcbc";
       };
       colors = let cfg = theme.colors;
       in mkMerge [
