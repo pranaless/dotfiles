@@ -151,7 +151,5 @@
         editor.line-number = "relative";
       };
     };
-    
-    # modules.git.enable = true;
   };
 }
