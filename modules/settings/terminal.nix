@@ -1,18 +1,7 @@
 { pkgs, lib, dlib, config, options, ... }:
 
 with lib;
-let
-  defaultColors = {
-    foreground = mkOption {
-      type = types.nullOr dlib.types.color;
-      default = null;
-    };
-    background = mkOption {
-      type = types.nullOr dlib.types.color;
-      default = null;
-    };
-  };
-in {
+{
   options.settings.terminal = {
     font = dlib.super options.settings.font;
   
@@ -21,7 +10,16 @@ in {
         type = types.nullOr (types.uniq (dlib.types.exactListOf dlib.types.color 16));
         default = null;
       };
-    } // defaultColors;
+
+      foreground = mkOption {
+        type = types.nullOr dlib.types.color;
+        default = null;
+      };
+      background = mkOption {
+        type = types.nullOr dlib.types.color;
+        default = null;
+      };
+    };
 
     scrollback = {
       lines = mkOption {
