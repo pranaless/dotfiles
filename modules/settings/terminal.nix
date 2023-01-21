@@ -31,5 +31,16 @@ with lib;
         default = null;
       };
     };
+
+    cursor = {
+      shape = mkOption {
+        type = types.nullOr (types.enum [ "block" "beam" "underline" ]);
+        default = null;
+      };
+      blink = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+      };
+    };
   };
 }

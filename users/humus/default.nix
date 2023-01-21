@@ -86,6 +86,10 @@
           lines = 2000;
           multiplier = 4.0;
         };
+        cursor = {
+          shape = "beam";
+          blink = false;
+        };
       };
 
       helix = {
@@ -137,8 +141,6 @@
           indicator-position = "none";
         };
         cursor = {
-          style = "beam";
-          blink = "no";
           color = "262626 bcbcbc";
         };
       };

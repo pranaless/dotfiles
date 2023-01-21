@@ -12,6 +12,7 @@ with lib;
   let
     cfg = config.settings.foot;
     mkIfNotNull = v: mkIf (v != null) v;
+    boolSetting = b: if b then "yes" else "no";
   in mkIf (config.programs.foot.enable && config.programs.foot.useSettings) {
     programs.foot.settings = {
       main = {
@@ -32,6 +33,10 @@ with lib;
           background = mkIfNotNull cfg.colors.background;
         }
       ];
+      cursor = {
+        style = mkIfNotNull cfg.cursor.shape;
+        blink = mkIf (cfg.cursor.blink != null) (boolSetting cfg.cursor.blink);
+      };
     };
   };
 }
