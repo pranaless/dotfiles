@@ -45,6 +45,7 @@
       ripgrep
       river
       slurp
+      swww
       (tor-browser-bundle-bin.override {
         useHardenedMalloc = false;
       })
