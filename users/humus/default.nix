@@ -99,7 +99,7 @@
       };
 
       helix = {
-        name = "nord";
+        name = "kanagawa";
       };
     };
 
@@ -157,6 +157,10 @@
       useSettings = true;
       settings = {
         editor.line-number = "relative";
+        editor.cursor-shape = {
+          insert = "bar";
+          normal = "block";
+        };
       };
     };
   };
