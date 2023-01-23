@@ -54,7 +54,7 @@
     ];
     
     settings = {
-      theme = "apprentice";
+      theme = "kanagawa";
     
       terminal = {
         font = {
@@ -63,29 +63,29 @@
         };
         colors = {
           palette = [
-            "1c1c1c"
-            "af5f5f"
-            "5f875f"
-            "87875f"
-            "5f87af"
-            "5f5f87"
-            "5f8787"
-            "6c6c6c"
-            "444444"
-            "ff8700"
-            "87af87"
-            "ffffaf"
-            "87afd7"
-            "8787af"
-            "5fafaf"
-            "ffffff"
+            "090618"
+            "c34043"
+            "76946a"
+            "c0a36e"
+            "7e9cd8"
+            "957fb8"
+            "6a9589"
+            "c8c093"
+            "727169"
+            "e82424"
+            "98bb6c"
+            "e6c384"
+            "7fb4ca"
+            "938aa9"
+            "7aa89f"
+            "dcd7ba"
           ];
-          foreground = "bcbcbc";
-          background = "262626";
+          foreground = "dcd7ba";
+          background = "1f1f28";
 
-          cursor = {
-            foreground = "262626";
-            background = "bcbcbc";
+          selection = {
+            foreground = "c8c093";
+            background = "2d4f67";
           };
         };
         scrollback = {
@@ -96,10 +96,6 @@
           shape = "beam";
           blink = false;
         };
-      };
-
-      helix = {
-        name = "kanagawa";
       };
     };
 
@@ -145,9 +141,6 @@
         };
         scrollback = {
           indicator-position = "none";
-        };
-        cursor = {
-          color = "262626 bcbcbc";
         };
       };
     };
