@@ -32,10 +32,15 @@ with lib;
           foreground = mkIfNotNull cfg.colors.foreground;
           background = mkIfNotNull cfg.colors.background;
         }
+        (mkIf (cfg.colors.selection != null) {
+          selection-foreground = cfg.colors.selection.foreground;
+          selection-background = cfg.colors.selection.background;
+        })
       ];
       cursor = {
         style = mkIfNotNull cfg.cursor.shape;
         blink = mkIf (cfg.cursor.blink != null) (boolSetting cfg.cursor.blink);
+        color = mkIf (cfg.colors.cursor != null) "${cfg.colors.cursor.foreground} ${cfg.colors.cursor.background}";
       };
     };
   };

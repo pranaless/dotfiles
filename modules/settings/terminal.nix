@@ -1,7 +1,19 @@
 { pkgs, lib, dlib, config, options, ... }:
 
 with lib;
-{
+let
+  colors = types.submodule {
+    options = {
+      foreground = mkOption {
+        type = dlib.types.color;
+      };
+
+      background = mkOption {
+        type = dlib.types.color;
+      };
+    };
+  };
+in {
   options.settings.terminal = {
     font = dlib.super options.settings.font;
   
@@ -17,6 +29,16 @@ with lib;
       };
       background = mkOption {
         type = types.nullOr dlib.types.color;
+        default = null;
+      };
+
+      selection = mkOption {
+        type = types.nullOr colors;
+        default = null;
+      };
+
+      cursor = mkOption {
+        type = types.nullOr colors;
         default = null;
       };
     };

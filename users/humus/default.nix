@@ -82,6 +82,11 @@
           ];
           foreground = "bcbcbc";
           background = "262626";
+
+          cursor = {
+            foreground = "262626";
+            background = "bcbcbc";
+          };
         };
         scrollback = {
           lines = 2000;
