@@ -11,9 +11,7 @@ rec {
     flakes ? {},
     modules ? []
   }: let
-    args = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes // {
-      dlib = self.lib;
-    };
+    flakesPkgs = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes;
   in nixosSystem {
     inherit system;
     modules = [
@@ -21,12 +19,15 @@ rec {
       ../modules
       {
         config = {
-          _module.args = args;
+          _module.args.dlib = self.lib;
           home-manager.sharedModules = [{
-            config._module.args = args;
+            config._module.args.dlib = self.lib;
           }];
           
-          nixpkgs.overlays = [ (import ../pkgs) ];
+          nixpkgs.overlays = [
+            (import ../pkgs)
+            (self: super: flakesPkgs)
+          ];
           nix.settings = {
             experimental-features = [ "nix-command" "flakes" ];
             sandbox = true;

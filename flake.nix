@@ -62,7 +62,7 @@
             time.timeZone = "UTC";
             i18n.defaultLocale = "en_US.UTF-8";
           })
-          ({ pkgs, hyprland, ... }: {
+          ({ pkgs, ... }: {
             networking.networkmanager.enable = true;
 
             services.printing = {
@@ -80,7 +80,7 @@
             ];
             programs.hyprland = {
               enable = true;
-              package = hyprland.hyprland;
+              package = pkgs.hyprland.hyprland;
             };
             programs.steam.enable = true;
           })
