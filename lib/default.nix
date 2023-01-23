@@ -8,6 +8,7 @@ rec {
 
   mkHosts = builtins.mapAttrs (hostName: {
     system,
+    flakes ? {},
     modules ? []
   }: nixosSystem {
     inherit system;
@@ -16,7 +17,9 @@ rec {
       ../modules
       {
         config = {
-          _module.args.dlib = self.lib;
+          _module.args = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes // {
+            dlib = self.lib;
+          };
           home-manager.sharedModules = [{
             config._module.args.dlib = self.lib;
           }];

@@ -25,6 +25,7 @@
     nixosConfigurations = lib.mkHosts {
       humus = {
         system = "x86_64-linux";
+        flakes = { inherit hyprland; };
         modules = [
           hyprland.nixosModules.default
           ./users/humus
@@ -61,7 +62,7 @@
             time.timeZone = "UTC";
             i18n.defaultLocale = "en_US.UTF-8";
           })
-          ({ pkgs, ... }: {
+          ({ pkgs, hyprland, ... }: {
             networking.networkmanager.enable = true;
 
             services.printing = {
@@ -77,7 +78,10 @@
               winetricks
               wineWowPackages.waylandFull
             ];
-            programs.hyprland.enable = true;
+            programs.hyprland = {
+              enable = true;
+              package = hyprland.hyprland;
+            };
             programs.steam.enable = true;
           })
         ];
