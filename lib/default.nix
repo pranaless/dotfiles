@@ -8,7 +8,7 @@ rec {
 
   mkHosts = builtins.mapAttrs (hostName: {
     system,
-    modules ? {}
+    modules ? []
   }: nixosSystem {
     inherit system;
     modules = [
