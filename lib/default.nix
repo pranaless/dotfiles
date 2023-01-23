@@ -10,18 +10,20 @@ rec {
     system,
     flakes ? {},
     modules ? []
-  }: nixosSystem {
+  }: let
+    args = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes // {
+      dlib = self.lib;
+    };
+  in nixosSystem {
     inherit system;
     modules = [
       home-manager.nixosModules.default
       ../modules
       {
         config = {
-          _module.args = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes // {
-            dlib = self.lib;
-          };
+          _module.args = args;
           home-manager.sharedModules = [{
-            config._module.args.dlib = self.lib;
+            config._module.args = args;
           }];
           
           nixpkgs.overlays = [ (import ../pkgs) ];
