@@ -3,8 +3,6 @@
     {
       imports = [
         ./settings
-        ./programs/foot.nix
-        ./programs/helix.nix
       ];
     }
   ];

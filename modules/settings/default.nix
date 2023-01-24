@@ -3,6 +3,8 @@ with lib;
 {
   imports = [
     ./terminal.nix
+    ./foot.nix
+    ./helix.ni
   ];
 
   options.settings = {
