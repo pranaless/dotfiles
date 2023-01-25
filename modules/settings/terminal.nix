@@ -19,7 +19,7 @@ in {
   
     colors = {
       palette = mkOption {
-        type = types.nullOr (types.uniq (dlib.types.exactListOf dlib.types.color 16));
+        type = types.nullOr (dlib.types.lists.exact dlib.types.color 16);
         default = null;
       };
 
@@ -45,11 +45,11 @@ in {
 
     scrollback = {
       lines = mkOption {
-        type = types.nullOr types.int;
+        type = types.nullOr types.ints.unsigned;
         default = null;
       };
       multiplier = mkOption {
-        type = types.nullOr types.number;
+        type = types.nullOr types.numbers.positive;
         default = null;
       };
     };

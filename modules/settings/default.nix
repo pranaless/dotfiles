@@ -4,7 +4,7 @@ with lib;
   imports = [
     ./terminal.nix
     ./foot.nix
-    ./helix.ni
+    ./helix.nix
   ];
 
   options.settings = {

@@ -3,6 +3,7 @@
     {
       imports = [
         ./settings
+        ./programs/hyprland.nix
       ];
     }
   ];
