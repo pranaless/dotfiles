@@ -94,6 +94,10 @@ in {
           tap-to-click = mkIfNotNull tp.tap;
         };
       };
+      decoration = {
+        "col.shadow" = mkIfNotNullMap cfg.colors.shadow.active;
+        "col.shadow_inactive" = mkIfNotNullMap cfg.colors.shadow.inactive;
+      };
       general = {
         "col.active_border" = mkIfNotNullMap gradientString cfg.colors.border.active;
         "col.inactive_border" = mkIfNotNullMap gradientString cfg.colors.border.inactive;
