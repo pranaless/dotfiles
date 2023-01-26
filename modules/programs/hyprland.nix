@@ -11,14 +11,19 @@ let
     (attrsOf configType)
     (listOf configType)
   ];
+  toKeyValue =
+    let
+      mkKeyValue = generators.mkKeyValueDefault { } "=";
+      mkLine = k: v: mkKeyValue k v + "\n";
+      mkLines = { name, value }: map (mkLine name) (toList value);
+    in pair: concatStrings (mkLines pair);
   generateConfig = attrs:
     let
-      leaves = generators.toKeyValue { listsAsDuplicateKeys = true; }
-        (filterAttrs (_: v: ! builtins.isAttrs v) attrs);
-      section = name: value: "${name} {\n${generateConfig value}}\n";
-      branches = concatStrings (mapAttrsToList section
-        (filterAttrs (_: v: builtins.isAttrs v) attrs));
-    in leaves + branches;
+      stripName = name:
+        map (flip nameValuePair attrs.${name}) (builtins.match "_*(.+)" name);
+      section = { name, value }: "${name} {\n${generateConfig value}}\n";
+      sectionOrVariable = pair: if isAttrs pair.value then section pair else toKeyValue pair;
+    in concatStrings (map sectionOrVariable (concatMap stripName (attrNames attrs)));
 in {
   options.programs.hyprland = {
     enable = mkEnableOption "hyprland";
@@ -38,6 +43,13 @@ in {
     settings = mkOption {
       type = configType;
       default = { };
+      description = ''
+        Configuration written to <filename>$XDG_CONFIG_HOME/hypr/hyprland.conf</filename>.
+
+        Similar to the INI format: sets are converted to categories, lists are expanded as duplicate keys,
+        with one notable exception. Attributes that start with an underscore are placed before other attributes,
+        with the underscore removed.
+      '';
     };
   };
 
@@ -45,17 +57,7 @@ in {
     home.packages = mkIf (cfg.package != null) [ cfg.package ];
   
     xdg.configFile."hypr/hyprland.conf" = mkIf (cfg.settings != { }) {
-      text =
-        if cfg.settings ? animations
-          then
-            let
-              animations = removeAttrs cfg.settings.animations [ "bezier" ];
-              bezier = generateConfig {
-                bezier = optional (cfg.settings.animations ? bezier) cfg.settings.animations.bezier;
-              };
-              IHateHyprlandConfigurationFileAndItHatesMe = removeAttrs cfg.settings [ "animations" ];
-            in generateConfig IHateHyprlandConfigurationFileAndItHatesMe + "animations {\n${bezier}${generateConfig animations}}\n"
-          else generateConfig cfg.settings;
+      text = generateConfig cfg.settings;
     };
   };
 }
