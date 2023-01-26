@@ -156,5 +156,126 @@
         };
       };
     };
+
+    programs.hyprland = {
+      enable = true;
+      settings = {
+        monitor = [
+          ",preferred,auto,auto"
+        ];
+
+        exec-once = [
+          "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+          "${pkgs.foot}/bin/foot --server"
+          "${pkgs.eww-wayland}/bin/eww open bar"
+        ];
+
+        input = {
+          kb_layout = "us,ua,ru";
+          kb_options = "grp:win_space_toggle";
+
+          follow_mouse = 1;
+
+          touchpad = {
+            disable_while_typing = false;
+            natural_scroll = true;
+          };
+        };
+
+        general = {
+          gaps_in = 10;
+          gaps_out = 20;
+
+          border_size = 2;
+          "col.active_border" = "rgba(7E9CD8ee) rgba(7FB4CAee) 45deg";
+          "col.inactive_border" = "rgba(595959aa)";
+
+          no_cursor_warps = true;
+          cursor_inactive_timeout = 5;
+
+          layout = "dwindle";
+        };
+
+        decoration = {
+          rounding = 10;
+
+          blur = true;
+          blur_size = 3;
+          blur_passes = 4;
+          blur_ignore_opacity = true;
+
+          active_opacity = 0.85;
+          inactive_opacity = 0.7;
+
+          drop_shadow = false;
+        };
+
+        animations = {
+          enabled = true;
+
+          bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+
+          animation = [
+            "windows, 1, 7, myBezier"
+            "windowsOut, 1, 7, default, popin 80%"
+            "border, 1, 10, default"
+            "fade, 1, 7, default"
+            "workspaces, 1, 6, default"
+          ];
+        };
+
+        dwindle = {
+          pseudotile = true;
+          preserve_split = true;
+        };
+
+        gestures = {
+          workspace_swipe = true;
+        };
+
+        bind = let mod = "SUPER"; in [
+          "${mod},       Return, exec, ${pkgs.foot}/bin/footclient"
+          "${mod} SHIFT, Q, exit,"
+
+          "${mod}, C, killactive,"
+          "${mod}, D, togglefloating,"
+          "${mod}, F, fullscreen, 0"
+          "${mod}, P, pseudo,"
+          "${mod}, S, togglesplit,"
+          
+          "${mod}, left,  movefocus, l"
+          "${mod}, right, movefocus, r"
+          "${mod}, up,    movefocus, u"
+          "${mod}, down,  movefocus, d"
+
+          "${mod}, 1, workspace, 1"
+          "${mod}, 2, workspace, 2"
+          "${mod}, 3, workspace, 3"
+          "${mod}, 4, workspace, 4"
+          "${mod}, 5, workspace, 5"
+          "${mod}, 6, workspace, 6"
+          "${mod}, 7, workspace, 7"
+          "${mod}, 8, workspace, 8"
+          "${mod}, 9, workspace, 9"
+          "${mod}, 0, workspace, 10"
+
+          "${mod} SHIFT, 1, movetoworkspace, 1"
+          "${mod} SHIFT, 2, movetoworkspace, 2"
+          "${mod} SHIFT, 3, movetoworkspace, 3"
+          "${mod} SHIFT, 4, movetoworkspace, 4"
+          "${mod} SHIFT, 5, movetoworkspace, 5"
+          "${mod} SHIFT, 6, movetoworkspace, 6"
+          "${mod} SHIFT, 7, movetoworkspace, 7"
+          "${mod} SHIFT, 8, movetoworkspace, 8"
+          "${mod} SHIFT, 9, movetoworkspace, 9"
+          "${mod} SHIFT, 0, movetoworkspace, 10"
+        ];
+
+        bindm = let mod = "SUPER"; in [
+          "${mod}, mouse:272, movewindow"
+          "${mod}, mouse:273, resizewindow"
+        ];
+      };
+    };
   };
 }

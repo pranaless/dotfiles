@@ -42,10 +42,20 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = mkIf (cfg.package != null) cfg.package;
+    home.packages = mkIf (cfg.package != null) [ cfg.package ];
   
     xdg.configFile."hypr/hyprland.conf" = mkIf (cfg.settings != { }) {
-      text = generateConfig cfg.settings;
+      text =
+        if cfg.settings ? animations
+          then
+            let
+              animations = removeAttrs cfg.settings.animations [ "bezier" ];
+              bezier = generateConfig {
+                bezier = optional (cfg.settings.animations ? bezier) cfg.settings.animations.bezier;
+              };
+              IHateHyprlandConfigurationFileAndItHatesMe = removeAttrs cfg.settings [ "animations" ];
+            in generateConfig IHateHyprlandConfigurationFileAndItHatesMe + "animations {\n${bezier}${generateConfig animations}}\n"
+          else generateConfig cfg.settings;
     };
   };
 }
