@@ -56,6 +56,11 @@
     settings = {
       theme = "kanagawa";
     
+      keyboard = {
+        layouts = [ "us" "ua" "ru" ];
+        options = [ "grp:win_space_toggle" ];
+      };
+    
       terminal = {
         font = {
           name = "Cozette";
@@ -95,6 +100,16 @@
         cursor = {
           shape = "beam";
           blink = false;
+        };
+      };
+
+      hyprland = {
+        colors.border = {
+          active = {
+            colors = [ "rgba(7E9CD8ee)" "rgba(7FB4CAee)" ];
+            angle = 45;
+          };
+          inactive = "rgba(595959aa)";
         };
       };
     };
@@ -159,6 +174,7 @@
 
     programs.hyprland = {
       enable = true;
+      useSettings = true;
       settings = {
         monitor = [
           ",preferred,auto,auto"
@@ -171,9 +187,6 @@
         ];
 
         input = {
-          kb_layout = "us,ua,ru";
-          kb_options = "grp:win_space_toggle";
-
           follow_mouse = 1;
 
           touchpad = {
@@ -187,8 +200,6 @@
           gaps_out = 20;
 
           border_size = 2;
-          "col.active_border" = "rgba(7E9CD8ee) rgba(7FB4CAee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
 
           no_cursor_warps = true;
           cursor_inactive_timeout = 5;

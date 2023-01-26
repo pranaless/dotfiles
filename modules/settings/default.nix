@@ -2,9 +2,12 @@
 with lib;
 {
   imports = [
+    ./keyboard.nix
     ./terminal.nix
+
     ./foot.nix
     ./helix.nix
+    ./hyprland.nix
   ];
 
   options.settings = {
