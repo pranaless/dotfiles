@@ -10,25 +10,13 @@ let
     else v;
 in {
   options.settings.hyprland = {
-    keyboard = dlib.super options.settings.keyboard // {
-      numlock = mkOption {
-        type = types.nullOr types.bool;
-        default = null;
-        example = false;
-        description = "Whether to enable numlock by default.";
-      };
-
-      repeat = {
-        rate = mkOption {
-          type = types.nullOr types.ints.positive;
+    inputs = recursiveUpdate (dlib.super options.settings.inputs) {
+      keyboard = {
+        numlock = mkOption {
+          type = types.nullOr types.bool;
           default = null;
-          example = 25;
-        };
-
-        delay = mkOption {
-          type = types.nullOr types.ints.unsigned;
-          default = null;
-          example = 600;
+          example = false;
+          description = "Whether to enable numlock by default.";
         };
       };
     };
@@ -64,17 +52,47 @@ in {
 
   config = mkIf config.programs.hyprland.useSettings {
     programs.hyprland.settings = {
-      input = {
-        kb_model = mkIfNotNull cfg.keyboard.model;
-        kb_layout = mkIf (cfg.keyboard.layouts != [])
-          (concatStringsSep "," (map (v: v.name) cfg.keyboard.layouts));
-        kb_variant = mkIf (any (v: v.variant != null) cfg.keyboard.layouts)
-          (concatStringsSep "," (map (v: v.variant) cfg.keyboard.layouts));
-        kb_options = mkIfNotNullMap (concatStringsSep ",") cfg.keyboard.options;
+      input =
+      let
+        kb = cfg.inputs.keyboard;
+        pt = cfg.inputs.pointer;
+        tp = cfg.inputs.touchpad;
+      in {
+        kb_model = mkIfNotNull kb.model;
+        kb_layout = mkIf (kb.layouts != [])
+          (concatStringsSep "," (map (v: v.name) kb.layouts));
+        kb_variant = mkIf (any (v: v.variant != null) kb.layouts)
+          (concatStringsSep "," (map (v: v.variant) kb.layouts));
+        kb_options = mkIfNotNullMap (concatStringsSep ",") kb.options;
 
-        numlock_by_default = mkIfNotNull cfg.keyboard.numlock;
-        repeat_rate = mkIfNotNull cfg.keyboard.repeat.rate;
-        repeat_delay = mkIfNotNull cfg.keyboard.repeat.delay;
+        repeat_rate = mkIfNotNull kb.repeat.rate;
+        repeat_delay = mkIfNotNull kb.repeat.delay;
+
+        numlock_by_default = mkIfNotNull kb.numlock;
+
+        sensitivity = mkIfNotNull pt.acceleration.value;
+        accel_profile = mkIfNotNull pt.acceleration.profile;
+
+        left_handed = mkIfNotNull pt.leftHanded;
+        scroll_method = mkIfNotNullMap (v: {
+          none = "no_scroll";
+          twoFinger = "2fg";
+          edge = "edge";
+          button = "on_button_down";
+        }.${v}) pt.scroll.method;
+        natural_scroll = mkIfNotNull pt.scroll.natural;
+
+        touchpad = {
+          disable_while_typing = mkIfNotNull tp.disableWhileTyping;
+          natural_scroll = mkIfNotNull tp.scroll.natural;
+          scroll_factor = mkIfNotNull tp.scroll.factor;
+          middle_button_emulation = mkIfNotNull tp.middleButtonEmulation;
+          clickfinger_behavior = mkIfNotNullMap (v: {
+            buttonAreas = false;
+            clickfinger = true;
+          }.${v}) tp.clickMethod;
+          tap-to-click = mkIfNotNull tp.tap;
+        };
       };
       general = {
         "col.active_border" = mkIfNotNullMap gradientString cfg.colors.border.active;

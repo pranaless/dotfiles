@@ -2,7 +2,7 @@
 with lib;
 {
   imports = [
-    ./keyboard.nix
+    ./inputs.nix
     ./terminal.nix
 
     ./foot.nix
