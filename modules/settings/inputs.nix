@@ -1,4 +1,4 @@
-{ pkgs, lib, dlib, config, options, ... }:
+{ pkgs, lib, config, options, ... }:
 
 with lib;
 {
@@ -130,7 +130,7 @@ with lib;
       };
     };
 
-    touchpad = dlib.super options.settings.inputs.pointer;
+    touchpad = dl.super options.settings.inputs.pointer;
 
     # TODO: other per-type (see sway-input(5)) and per-device settings
   };

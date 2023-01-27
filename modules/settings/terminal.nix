@@ -1,34 +1,34 @@
-{ pkgs, lib, dlib, config, options, ... }:
+{ pkgs, lib, config, options, ... }:
 
 with lib;
 let
   colors = types.submodule {
     options = {
       foreground = mkOption {
-        type = dlib.types.color;
+        type = dl.types.color;
       };
 
       background = mkOption {
-        type = dlib.types.color;
+        type = dl.types.color;
       };
     };
   };
 in {
   options.settings.terminal = {
-    font = dlib.super options.settings.font;
+    font = dl.super options.settings.font;
   
     colors = {
       palette = mkOption {
-        type = types.nullOr (dlib.types.lists.exact dlib.types.color 16);
+        type = types.nullOr (dl.types.lists.exact dl.types.color 16);
         default = null;
       };
 
       foreground = mkOption {
-        type = types.nullOr dlib.types.color;
+        type = types.nullOr dl.types.color;
         default = null;
       };
       background = mkOption {
-        type = types.nullOr dlib.types.color;
+        type = types.nullOr dl.types.color;
         default = null;
       };
 

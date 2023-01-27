@@ -15,9 +15,7 @@
   let
     lib = import ./lib {
       inherit self home-manager;
-      lib = nixpkgs.lib.extend (self: super: {
-        dl = lib;
-      });
+      inherit (nixpkgs) lib;
     };
   in {
     inherit lib;

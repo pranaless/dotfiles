@@ -1,14 +1,14 @@
-{ pkgs, lib, dlib, config, options, ... }:
+{ pkgs, lib, config, options, ... }:
 
 with lib;
 let
   cfg = config.settings.foot;
   mkIfNotNull = v: mkIf (v != null) v;
   mkIfNotNullMap = f: v: mkIf (v != null) (f v);
-  formatColor = dlib.colors.formatAsHex false;
+  formatColor = dl.colors.formatAsHex false;
   boolSetting = b: if b then "yes" else "no";
 in {
-  options.settings.foot = dlib.super options.settings.terminal;
+  options.settings.foot = dl.super options.settings.terminal;
   options.programs.foot.useSettings = mkOption {
     type = types.bool;
     default = false;

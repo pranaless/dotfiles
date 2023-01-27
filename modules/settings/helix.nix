@@ -1,9 +1,9 @@
-{ pkgs, lib, dlib, config, options, ... }:
+{ pkgs, lib, config, options, ... }:
 
 with lib;
 {
   options.settings.helix = {
-    name = dlib.super options.settings.theme;
+    name = dl.super options.settings.theme;
     theme = mkOption {
       type = types.nullOr (pkgs.formats.toml {}).type;
       default = null;

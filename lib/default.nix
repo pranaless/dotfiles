@@ -1,10 +1,12 @@
 { self, lib, home-manager }:
 with lib;
-let callLibFile = f: import f { inherit lib; self = self.lib; };
+let
+  importLibFile = f: import f { inherit lib; self = self.lib; };
+  extendLib = lib: lib.extend (_: _: { dl = self.lib; });
 in rec {
-  options = callLibFile ./options.nix;
-  colors = callLibFile ./colors.nix;
-  types = callLibFile ./types.nix;
+  colors = importLibFile ./colors.nix;
+  options = importLibFile ./options.nix;
+  types = importLibFile ./types.nix;
 
   inherit (options) super;
 
@@ -16,17 +18,16 @@ in rec {
     flakesPkgs = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes;
   in nixosSystem {
     inherit system;
+    lib = extendLib lib;
     modules = [
       home-manager.nixosModules.default
       ../modules
       {
         config = {
-          _module.args.dlib = self.lib;
-          home-manager.sharedModules = [{
-            config._module.args.dlib = self.lib;
-          }];
-          
           nixpkgs.overlays = [
+            (self: super: {
+              lib = extendLib super.lib;
+            })
             (import ../pkgs)
             (self: super: flakesPkgs)
           ];

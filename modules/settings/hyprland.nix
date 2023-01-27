@@ -1,17 +1,17 @@
-{ pkgs, lib, dlib, config, options, ... }:
+{ pkgs, lib, config, options, ... }:
 
 with lib;
 let
   cfg = config.settings.hyprland;
   mkIfNotNull = v: mkIf (v != null) v;
   mkIfNotNullMap = f: v: mkIf (v != null) (f v);
-  formatColor = c: "rgba(${dlib.colors.formatAsHex true c})";
+  formatColor = c: "rgba(${dl.colors.formatAsHex true c})";
   gradientString = v: if v ? colors
     then "${concatStringsSep " " (map formatColor v.colors)} ${toString v.angle}deg"
     else formatColor v;
 in {
   options.settings.hyprland = {
-    inputs = recursiveUpdate (dlib.super options.settings.inputs) {
+    inputs = recursiveUpdate (dl.super options.settings.inputs) {
       keyboard = {
         numlock = mkOption {
           type = types.nullOr types.bool;
@@ -25,22 +25,22 @@ in {
     colors = {
       border = {
         active = mkOption {
-          type = types.nullOr (types.either dlib.types.color dlib.types.linearGradient);
+          type = types.nullOr (types.either dl.types.color dl.types.linearGradient);
           default = null;
         };
         inactive = mkOption {
-          type = types.nullOr (types.either dlib.types.color dlib.types.linearGradient);
+          type = types.nullOr (types.either dl.types.color dl.types.linearGradient);
           default = null;
         };
       };
 
       shadow = {
         active = mkOption {
-          type = types.nullOr dlib.types.color;
+          type = types.nullOr dl.types.color;
           default = null;
         };
         inactive = mkOption {
-          type = types.nullOr dlib.types.color;
+          type = types.nullOr dl.types.color;
           default = null;
         };
       };
