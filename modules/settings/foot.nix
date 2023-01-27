@@ -3,8 +3,6 @@
 with lib;
 let
   cfg = config.settings.foot;
-  mkIfNotNull = v: mkIf (v != null) v;
-  mkIfNotNullMap = f: v: mkIf (v != null) (f v);
   formatColor = dl.colors.formatAsHex false;
   boolSetting = b: if b then "yes" else "no";
 in {
@@ -20,8 +18,8 @@ in {
         font = mkIf (cfg.font != null) "${cfg.font.name}:size=${toString cfg.font.size}"; # FIXME: handle fonts more robustly
       };
       scrollback = {
-        lines = mkIfNotNull cfg.scrollback.lines;
-        multiplier = mkIfNotNull cfg.scrollback.multiplier;
+        lines = dl.mkIfNotNull cfg.scrollback.lines;
+        multiplier = dl.mkIfNotNull cfg.scrollback.multiplier;
       };
       colors = mkMerge [
         (mkIf (cfg.colors.palette != null)
@@ -30,8 +28,8 @@ in {
             value = formatColor c;
           }) cfg.colors.palette)))
         {
-          foreground = mkIfNotNullMap formatColor cfg.colors.foreground;
-          background = mkIfNotNullMap formatColor cfg.colors.background;
+          foreground = dl.mkIfNotNullMap formatColor cfg.colors.foreground;
+          background = dl.mkIfNotNullMap formatColor cfg.colors.background;
         }
         (mkIf (cfg.colors.selection != null) {
           selection-foreground = formatColor cfg.colors.selection.foreground;
@@ -39,7 +37,7 @@ in {
         })
       ];
       cursor = {
-        style = mkIfNotNull cfg.cursor.shape;
+        style = dl.mkIfNotNull cfg.cursor.shape;
         blink = mkIf (cfg.cursor.blink != null) (boolSetting cfg.cursor.blink);
         color = mkIf (cfg.colors.cursor != null) "${formatColor cfg.colors.cursor.foreground} ${formatColor cfg.colors.cursor.background}";
       };

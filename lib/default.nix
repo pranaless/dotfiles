@@ -5,9 +5,11 @@ let
   extendLib = lib: lib.extend (_: _: { dl = self.lib; });
 in rec {
   colors = importLibFile ./colors.nix;
+  modules = importLibFile ./modules.nix;
   options = importLibFile ./options.nix;
   types = importLibFile ./types.nix;
 
+  inherit (modules) mkIfNotNull mkIfNotNullMap;
   inherit (options) super;
 
   mkHosts = builtins.mapAttrs (hostName: {
