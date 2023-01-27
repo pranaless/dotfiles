@@ -5,9 +5,7 @@ let
   cfg = config.settings.hyprland;
   mkIfNotNull = v: mkIf (v != null) v;
   mkIfNotNullMap = f: v: mkIf (v != null) (f v);
-  formatColor = c:
-    let color = dlib.colors.parseColor c;
-    in "rgba(${toHexString color.red}${toHexString color.green}${toHexString color.blue}${toHexString color.alpha})";
+  formatColor = c: "rgba(${dlib.colors.formatAsHex true c})";
   gradientString = v: if v ? colors
     then "${concatStringsSep " " (map formatColor v.colors)} ${toString v.angle}deg"
     else formatColor v;

@@ -1,7 +1,7 @@
 { self, lib }:
 
 with lib;
-{
+rec {
   parseColor = x:
     let
       pipeNullable = fs: flip pipe (map mapNullable fs);
@@ -50,4 +50,9 @@ with lib;
         ])
       ];
     in findSingle (v: v != null) null null (map (f: f x) formats);
+
+  formatAsHex = useAlpha: c:
+    let
+      color = if isString c then parseColor c else c;
+    in "${toHexString color.red}${toHexString color.green}${toHexString color.blue}${optionalString useAlpha (toHexString color.alpha)}";
 }

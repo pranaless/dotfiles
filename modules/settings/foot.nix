@@ -5,9 +5,7 @@ let
   cfg = config.settings.foot;
   mkIfNotNull = v: mkIf (v != null) v;
   mkIfNotNullMap = f: v: mkIf (v != null) (f v);
-  formatColor = c:
-    let color = dlib.colors.parseColor c;
-    in "${toHexString color.red}${toHexString color.green}${toHexString color.blue}";
+  formatColor = dlib.colors.formatAsHex false;
   boolSetting = b: if b then "yes" else "no";
 in {
   options.settings.foot = dlib.super options.settings.terminal;
