@@ -1,6 +1,20 @@
-{ lib }:
+{ self, lib }:
 with lib;
 rec {
+  # Actually good uniq that respects the merge behaviour of the type it wraps.
+  uniq = elemType: mkOptionType {
+    name = "uniq";
+    inherit (elemType) description descriptionClass check emptyValue getSubOptions getSubModules;
+    merge = loc: defs:
+      if length defs == 1
+        then elemType.merge loc defs
+        else assert length defs > 1;
+          throw "The option `${showOption loc}' is defined multiple times. Definition values:${showDefs defs}";
+    substSubModules = m: uniq (elemType.substSubModules m);
+    functor = (defaultFunctor "uniq") // { wrapped = elemType; };
+    nestedTypes.elemType = elemType;
+  };
+
   lists = {
     atLeast = elemType: len:
       let list = types.addCheck (types.listOf elemType) (l: length l >= len);
@@ -10,25 +24,34 @@ rec {
       };
 
     exact = elemType: len:
-      let list = types.uniq (types.addCheck (types.listOf elemType) (l: length l == len));
+      let list = uniq (types.addCheck (types.listOf elemType) (l: length l == len));
       in list // {
         description = "list of ${toString len} ${types.optionDescriptionPhrase (class: class == "noun" || class == "composite") elemType}";
         emptyValue = { };
       };
   };
 
-  color = types.str // {
-    name = "color";
-  }; # TODO
+  color = mkOptionType {
+    name = "colorString";
+    description = "css rgb color string";
+    descriptionClass = "noun";
+    check = x: isString x && self.strings.parseColor x != null;
+    merge =
+      let
+        formatAsHex = v: "#${toHexString v.red}${toHexString v.green}${toHexString v.blue}${toHexString v.alpha}";
+      in loc: defs: mergeEqualOption loc (map (def: def // { value = formatAsHex (self.strings.parseColor def.value); }) defs);
+  };
 
   linearGradient = types.submodule ({ config, ... }: {
     options = {
       colors = mkOption {
-        type = types.uniq (lists.atLeast color 2);
+        type = uniq (lists.atLeast color 2);
       };
       angle = mkOption {
         type = types.number;
       };
     };
-  });
+  }) // {
+    description = "linear gradient";
+  };
 }

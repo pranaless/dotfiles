@@ -1,8 +1,9 @@
 { self, lib, home-manager }:
 with lib;
 rec {
-  types = import ./types.nix { inherit lib; };
   options = import ./options.nix { inherit lib; };
+  strings = import ./strings.nix { inherit lib; };
+  types = import ./types.nix { inherit lib; self = self.lib; };
 
   inherit (options) super;
 

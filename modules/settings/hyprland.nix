@@ -5,9 +5,12 @@ let
   cfg = config.settings.hyprland;
   mkIfNotNull = v: mkIf (v != null) v;
   mkIfNotNullMap = f: v: mkIf (v != null) (f v);
+  formatColor = c:
+    let color = dlib.strings.parseColor c;
+    in "rgba(${toHexString color.red}${toHexString color.green}${toHexString color.blue}${toHexString color.alpha})";
   gradientString = v: if v ? colors
-    then "${concatStringsSep " " v.colors} ${toString v.angle}deg"
-    else v;
+    then "${concatStringsSep " " (map formatColor v.colors)} ${toString v.angle}deg"
+    else formatColor v;
 in {
   options.settings.hyprland = {
     inputs = recursiveUpdate (dlib.super options.settings.inputs) {
@@ -95,8 +98,8 @@ in {
         };
       };
       decoration = {
-        "col.shadow" = mkIfNotNullMap cfg.colors.shadow.active;
-        "col.shadow_inactive" = mkIfNotNullMap cfg.colors.shadow.inactive;
+        "col.shadow" = mkIfNotNullMap gradientString cfg.colors.shadow.active;
+        "col.shadow_inactive" = mkIfNotNullMap gradientString cfg.colors.shadow.inactive;
       };
       general = {
         "col.active_border" = mkIfNotNullMap gradientString cfg.colors.border.active;

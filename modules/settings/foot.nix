@@ -1,19 +1,22 @@
 { pkgs, lib, dlib, config, options, ... }:
 
 with lib;
-{
+let
+  cfg = config.settings.foot;
+  mkIfNotNull = v: mkIf (v != null) v;
+  mkIfNotNullMap = f: v: mkIf (v != null) (f v);
+  formatColor = c:
+    let color = dlib.strings.parseColor c;
+    in "${toHexString color.red}${toHexString color.green}${toHexString color.blue}";
+  boolSetting = b: if b then "yes" else "no";
+in {
   options.settings.foot = dlib.super options.settings.terminal;
   options.programs.foot.useSettings = mkOption {
     type = types.bool;
     default = false;
   };
   
-  config =
-  let
-    cfg = config.settings.foot;
-    mkIfNotNull = v: mkIf (v != null) v;
-    boolSetting = b: if b then "yes" else "no";
-  in mkIf (config.programs.foot.enable && config.programs.foot.useSettings) {
+  config = mkIf (config.programs.foot.enable && config.programs.foot.useSettings) {
     programs.foot.settings = {
       main = {
         font = mkIf (cfg.font != null) "${cfg.font.name}:size=${toString cfg.font.size}"; # FIXME: handle fonts more robustly
@@ -26,21 +29,21 @@ with lib;
         (mkIf (cfg.colors.palette != null)
           (listToAttrs (imap0 (i: c: {
             name = if i <= 7 then "regular${toString i}" else "bright${toString (i - 8)}";
-            value = c;
+            value = formatColor c;
           }) cfg.colors.palette)))
         {
-          foreground = mkIfNotNull cfg.colors.foreground;
-          background = mkIfNotNull cfg.colors.background;
+          foreground = mkIfNotNullMap formatColor cfg.colors.foreground;
+          background = mkIfNotNullMap formatColor cfg.colors.background;
         }
         (mkIf (cfg.colors.selection != null) {
-          selection-foreground = cfg.colors.selection.foreground;
-          selection-background = cfg.colors.selection.background;
+          selection-foreground = formatColor cfg.colors.selection.foreground;
+          selection-background = formatColor cfg.colors.selection.background;
         })
       ];
       cursor = {
         style = mkIfNotNull cfg.cursor.shape;
         blink = mkIf (cfg.cursor.blink != null) (boolSetting cfg.cursor.blink);
-        color = mkIf (cfg.colors.cursor != null) "${cfg.colors.cursor.foreground} ${cfg.colors.cursor.background}";
+        color = mkIf (cfg.colors.cursor != null) "${formatColor cfg.colors.cursor.foreground} ${formatColor cfg.colors.cursor.background}";
       };
     };
   };
