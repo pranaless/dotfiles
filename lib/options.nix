@@ -1,4 +1,4 @@
-{ lib }:
+{ self, lib }:
 
 with lib;
 rec {

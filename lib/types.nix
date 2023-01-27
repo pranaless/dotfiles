@@ -35,11 +35,11 @@ rec {
     name = "colorString";
     description = "css rgb color string";
     descriptionClass = "noun";
-    check = x: isString x && self.strings.parseColor x != null;
+    check = x: isString x && self.colors.parseColor x != null;
     merge =
       let
         formatAsHex = v: "#${toHexString v.red}${toHexString v.green}${toHexString v.blue}${toHexString v.alpha}";
-      in loc: defs: mergeEqualOption loc (map (def: def // { value = formatAsHex (self.strings.parseColor def.value); }) defs);
+      in loc: defs: mergeEqualOption loc (map (def: def // { value = formatAsHex (self.colors.parseColor def.value); }) defs);
   };
 
   linearGradient = types.submodule ({ config, ... }: {

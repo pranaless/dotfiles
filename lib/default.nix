@@ -1,9 +1,10 @@
 { self, lib, home-manager }:
 with lib;
-rec {
-  options = import ./options.nix { inherit lib; };
-  strings = import ./strings.nix { inherit lib; };
-  types = import ./types.nix { inherit lib; self = self.lib; };
+let callLibFile = f: import f { inherit lib; self = self.lib; };
+in rec {
+  options = callLibFile ./options.nix;
+  colors = callLibFile ./colors.nix;
+  types = callLibFile ./types.nix;
 
   inherit (options) super;
 

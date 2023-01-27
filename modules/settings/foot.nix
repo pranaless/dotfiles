@@ -6,7 +6,7 @@ let
   mkIfNotNull = v: mkIf (v != null) v;
   mkIfNotNullMap = f: v: mkIf (v != null) (f v);
   formatColor = c:
-    let color = dlib.strings.parseColor c;
+    let color = dlib.colors.parseColor c;
     in "${toHexString color.red}${toHexString color.green}${toHexString color.blue}";
   boolSetting = b: if b then "yes" else "no";
 in {
