@@ -36,10 +36,7 @@ rec {
     description = "css rgb color string";
     descriptionClass = "noun";
     check = x: isString x && self.colors.parseColor x != null;
-    merge =
-      let
-        formatAsHex = v: "#${self.colors.formatAsHex true v}";
-      in loc: defs: mergeEqualOption loc (map (def: def // { value = formatAsHex def.value; }) defs);
+    merge = loc: defs: mergeEqualOption loc (map (def: def // { value = "#${self.colors.formatAsHex true def.value}"; }) defs);
   };
 
   linearGradient = types.submodule ({ config, ... }: {
