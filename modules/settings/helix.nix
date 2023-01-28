@@ -1,7 +1,8 @@
 { pkgs, lib, config, options, ... }:
 
 with lib;
-{
+let cfg = config.settings.helix;
+in {
   options.settings.helix = {
     name = dl.super options.settings.theme;
     theme = mkOption {
@@ -14,10 +15,7 @@ with lib;
     default = false;
   };
 
-  config =
-  let
-    cfg = config.settings.helix;
-  in mkIf (config.programs.helix.enable && config.programs.helix.useSettings) {
+  config = mkIf (config.programs.helix.enable && config.programs.helix.useSettings) {
     programs.helix = {
       themes.${cfg.name} = mkIf (cfg.theme != null) cfg.theme;
       settings = {
