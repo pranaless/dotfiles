@@ -38,8 +38,8 @@ rec {
     check = x: isString x && self.colors.parseColor x != null;
     merge =
       let
-        formatAsHex = v: "#${toHexString v.red}${toHexString v.green}${toHexString v.blue}${toHexString v.alpha}";
-      in loc: defs: mergeEqualOption loc (map (def: def // { value = formatAsHex (self.colors.parseColor def.value); }) defs);
+        formatAsHex = v: "#${self.colors.formatAsHex true v}";
+      in loc: defs: mergeEqualOption loc (map (def: def // { value = formatAsHex def.value; }) defs);
   };
 
   linearGradient = types.submodule ({ config, ... }: {

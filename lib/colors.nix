@@ -46,6 +46,7 @@ rec {
               blue  = elemAt v 2;
               alpha = if length v == 4 then elemAt v 3 * 255.0 else 255;
             })
+          (mapAttrs (_: v: if v > 255 then 255 else v))
           (mapAttrs (_: v: builtins.fromJSON (head (splitString "." (toString v)))))
         ])
       ];
