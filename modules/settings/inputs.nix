@@ -96,7 +96,12 @@ with lib;
           example = 1.0;
         };
 
-        # button = mkOption { };
+        button = mkOption {
+          type = types.nullOr types.ints.unsigned;
+          default = null;
+          description = ''The button to use for `method = "button"`.'';
+          example = 272;
+        };
       };
 
       leftHanded = mkOption {

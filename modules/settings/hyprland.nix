@@ -79,6 +79,7 @@ in {
           edge = "edge";
           button = "on_button_down";
         }.${v}) pt.scroll.method;
+        scroll_button = dl.mkIfNotNull pt.scroll.button;
         natural_scroll = dl.mkIfNotNull pt.scroll.natural;
 
         touchpad = {
