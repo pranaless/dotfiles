@@ -292,5 +292,10 @@
         ];
       };
     };
+
+    programs.mako = {
+      enable = true;
+      font = "Cozette 10";
+    };
   };
 }
