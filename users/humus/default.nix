@@ -166,6 +166,9 @@
         scrollback = {
           indicator-position = "none";
         };
+        colors = {
+          alpha = 0.8;
+        };
       };
     };
 
@@ -219,11 +222,15 @@
           blur_passes = 4;
           blur_ignore_opacity = true;
 
-          active_opacity = 0.85;
-          inactive_opacity = 0.7;
+          active_opacity = 0.8;
+          inactive_opacity = 0.6;
 
           drop_shadow = false;
         };
+
+        windowrulesv2 = [
+          ''opacity 1.25,class:\bfoot\b''
+        ];
 
         animations = {
           enabled = true;
