@@ -55,5 +55,6 @@ rec {
   formatAsHex = useAlpha: c:
     let
       color = if isString c then parseColor c else c;
-    in "${toHexString color.red}${toHexString color.green}${toHexString color.blue}${optionalString useAlpha (toHexString color.alpha)}";
+      digit = d: fixedWidthString 2 "0" (toHexString d);
+    in "${digit color.red}${digit color.green}${digit color.blue}${optionalString useAlpha (digit color.alpha)}";
 }
