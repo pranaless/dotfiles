@@ -194,6 +194,7 @@
 
         exec-once = [
           "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+          "${pkgs.swww}/bin/swww init"
           "${pkgs.foot}/bin/foot --server"
           "${pkgs.eww-wayland}/bin/eww open bar"
         ];
