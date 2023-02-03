@@ -9,8 +9,9 @@ in rec {
   options = importLibFile ./options.nix;
   types = importLibFile ./types.nix;
 
-  inherit (modules) mkIfNotNull mkIfNotNullMap;
-  inherit (options) super;
+  inherit (modules) mkIfNotNull mkIfNotNullMap
+    mkSetting mkSettingMap mkDistinctSetting mkDistinctSettingMap;
+  inherit (options) super mkSettingOption inherits;
 
   mkHosts = builtins.mapAttrs (hostName: {
     system,

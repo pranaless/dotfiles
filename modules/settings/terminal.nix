@@ -15,53 +15,44 @@ let
   };
 in {
   options.settings.terminal = {
-    font = dl.super options.settings.font;
+    font = dl.inherits options.settings.font;
   
     colors = {
-      palette = mkOption {
-        type = types.nullOr (dl.types.lists.exact dl.types.color 16);
-        default = null;
+      palette = dl.mkSettingOption {
+        type = dl.types.lists.exact dl.types.color 16;
       };
 
-      foreground = mkOption {
-        type = types.nullOr dl.types.color;
-        default = null;
+      foreground = dl.mkSettingOption {
+        type = dl.types.color;
       };
-      background = mkOption {
-        type = types.nullOr dl.types.color;
-        default = null;
+      background = dl.mkSettingOption {
+        type = dl.types.color;
       };
 
-      selection = mkOption {
-        type = types.nullOr colors;
-        default = null;
+      selection = dl.mkSettingOption {
+        type = colors;
       };
 
-      cursor = mkOption {
-        type = types.nullOr colors;
-        default = null;
+      cursor = dl.mkSettingOption {
+        type = colors;
       };
     };
 
     scrollback = {
-      lines = mkOption {
-        type = types.nullOr types.ints.unsigned;
-        default = null;
+      lines = dl.mkSettingOption {
+        type = types.ints.unsigned;
       };
-      multiplier = mkOption {
-        type = types.nullOr types.numbers.positive;
-        default = null;
+      multiplier = dl.mkSettingOption {
+        type = types.numbers.positive;
       };
     };
 
     cursor = {
-      shape = mkOption {
-        type = types.nullOr (types.enum [ "block" "beam" "underline" ]);
-        default = null;
+      shape = dl.mkSettingOption {
+        type = types.enum [ "block" "beam" "underline" ];
       };
-      blink = mkOption {
-        type = types.nullOr types.bool;
-        default = null;
+      blink = dl.mkSettingOption {
+        type = types.bool;
       };
     };
   };

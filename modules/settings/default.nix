@@ -11,13 +11,13 @@ with lib;
   ];
 
   options.settings = {
-    font = mkOption {
+    font = dl.mkSettingOption {
       # The same as hm.types.fontType, except without the package option.
       # Since the above option is super-ed all over the place, keeping track of
       # duplicates is kinda a pain, so delegate the responsibility of adding font
       # packages to the user.
       # Maybe FIXME?
-      type = types.nullOr (types.submodule {
+      type = types.submodule {
         options = {
           name = mkOption {
             type = types.str;
@@ -32,8 +32,7 @@ with lib;
             description = "The size of the font.";
           };
         };
-      });
-      default = null;
+      };
     };
 
     theme = mkOption {
