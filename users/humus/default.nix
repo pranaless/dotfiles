@@ -166,9 +166,6 @@
         scrollback = {
           indicator-position = "none";
         };
-        colors = {
-          alpha = 0.8;
-        };
       };
     };
 
@@ -228,10 +225,6 @@
 
           drop_shadow = false;
         };
-
-        windowrulev2 = [
-          ''opacity 1.25,class:\bfoot\b''
-        ];
 
         animations = {
           enabled = true;
