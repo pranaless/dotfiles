@@ -229,7 +229,7 @@
           drop_shadow = false;
         };
 
-        windowrulesv2 = [
+        windowrulev2 = [
           ''opacity 1.25,class:\bfoot\b''
         ];
 
