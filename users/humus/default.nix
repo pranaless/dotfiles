@@ -46,9 +46,6 @@
       river
       slurp
       swww
-      (tor-browser-bundle-bin.override {
-        useHardenedMalloc = false;
-      })
       wl-clipboard
       wlsunset
     ];
