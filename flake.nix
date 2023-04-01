@@ -71,11 +71,7 @@
             services.openssh = {
               enable = true;
             };
-          
-            environment.systemPackages = with pkgs; [
-              winetricks
-              wineWowPackages.waylandFull
-            ];
+
             programs.hyprland = {
               enable = true;
               package = pkgs.hyprland.hyprland;
