@@ -58,7 +58,7 @@
     
       inputs = {
         keyboard = {
-          layouts = [ "us" "ua" "ru" ];
+          layouts = [ "us" "de" "ua" "ru" ];
           options = [ "grp:win_space_toggle" ];
         };
         pointer = {
