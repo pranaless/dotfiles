@@ -168,8 +168,8 @@
 
     programs.helix = {
       enable = true;
-      useSettings = true;
       settings = {
+        theme = "catppuccin_mocha";
         editor.line-number = "relative";
         editor.cursor-shape = {
           insert = "bar";
