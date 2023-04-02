@@ -247,7 +247,8 @@
         };
 
         bind = let mod = "SUPER"; in [
-          "${mod},       Return, exec, ${pkgs.foot}/bin/footclient"
+          "${mod}, Return, exec, ${pkgs.foot}/bin/footclient"
+
           "${mod} SHIFT, Q, exit,"
 
           "${mod}, C, killactive,"
