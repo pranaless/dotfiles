@@ -40,7 +40,9 @@
       git
       grim
       imv
+      keepassxc
       librewolf-wayland
+      mpv
       pavucontrol
       ripgrep
       river
