@@ -28,6 +28,7 @@
           hyprland.nixosModules.default
           ./users/humus
           {
+            nix.settings.trusted-users = [ "@wheel" ];
             nixpkgs.config.allowUnfree = true;
             nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
               "osu-lazer"
