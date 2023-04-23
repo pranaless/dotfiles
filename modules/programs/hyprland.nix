@@ -30,11 +30,11 @@ in {
 
     package = mkOption {
       type = types.nullOr types.package;
-      default = pkgs.hyprland.hyprland;
-      defaultText = literalExpression "pkgs.hyprland.hyprland";
+      default = pkgs.hyprland;
+      defaultText = literalExpression "pkgs.hyprland";
       description = "The hyprland package to install.";
       example = literalExpression ''
-        pkgs.hyprland.hyprland.override {
+        pkgs.hyprland.override {
           nvidiaPatches = true;
         }
       '';

@@ -23,7 +23,7 @@
     nixosConfigurations = lib.mkHosts {
       humus = {
         system = "x86_64-linux";
-        flakes = { inherit hyprland; };
+        flakes = { };
         modules = [
           hyprland.nixosModules.default
           ./users/humus
@@ -73,10 +73,6 @@
               enable = true;
             };
 
-            programs.hyprland = {
-              enable = true;
-              package = pkgs.hyprland.hyprland;
-            };
             programs.steam.enable = true;
           })
         ];
