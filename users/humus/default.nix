@@ -1,12 +1,12 @@
 { pkgs, config, ... }:
 
 {
-  hardware.bluetooth = {
-    enable = true;
-    settings = {
-      General.Enable = "Source,Sink,Media,Socket";
-    };
-  };
+  # hardware.bluetooth = {
+  #   enable = true;
+  #   settings = {
+  #     General.Enable = "Source,Sink,Media,Socket";
+  #   };
+  # };
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -45,7 +45,7 @@
       mpv
       pavucontrol
       ripgrep
-      river
+      # river
       slurp
       swww
       wl-clipboard
