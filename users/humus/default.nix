@@ -50,6 +50,7 @@
       swww
       wl-clipboard
       wlsunset
+      zathura
     ];
     
     settings = {
