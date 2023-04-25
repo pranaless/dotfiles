@@ -17,13 +17,57 @@
       inherit self home-manager;
       inherit (nixpkgs) lib;
     };
+    mkHosts = with nixpkgs.lib; let
+      extendLib = l: l.extend (_: _: { dl = lib; });
+    in builtins.mapAttrs (hostName: {
+      system,
+      # flakes ? {},
+      modules ? []
+    }: let
+      # flakesPkgs = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes;
+    in nixosSystem {
+      inherit system;
+      lib = extendLib nixpkgs.lib;
+      modules = [
+        home-manager.nixosModules.default
+        ./modules
+        {
+          config = {
+            nixpkgs.overlays = [
+              (self: super: {
+                lib = extendLib super.lib;
+              })
+              (import ./pkgs)
+              # (self: super: flakesPkgs)
+            ];
+            nix.settings = {
+              experimental-features = [ "nix-command" "flakes" ];
+              sandbox = true;
+            };
+            home-manager = {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+            };
+            system.configurationRevision = mkIf (self ? rev) self.rev;
+          };
+        }
+        {
+          config = {
+            boot.loader.systemd-boot.enable = mkDefault true;
+            boot.loader.efi.canTouchEfiVariables = mkDefault true;
+
+            networking.hostName = hostName;
+          };
+        }
+      ] ++ modules;
+    });
   in {
     inherit lib;
   
-    nixosConfigurations = lib.mkHosts {
+    nixosConfigurations = mkHosts {
       humus = {
         system = "x86_64-linux";
-        flakes = { };
+        # flakes = { };
         modules = [
           hyprland.nixosModules.default
           ./users/humus
