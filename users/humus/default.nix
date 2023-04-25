@@ -48,6 +48,7 @@
       # river
       slurp
       swww
+      wf-recorder
       wl-clipboard
       wlsunset
       zathura
