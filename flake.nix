@@ -52,14 +52,21 @@
             system.configurationRevision = mkIf (self ? rev) self.rev;
           };
         }
-        {
+        ({ pkgs, ... }: {
           config = {
             boot.loader.systemd-boot.enable = mkDefault true;
             boot.loader.efi.canTouchEfiVariables = mkDefault true;
 
             networking.hostName = hostName;
+
+            environment.systemPackages = with pkgs; [
+              bc
+              fd
+              git
+              ripgrep
+            ];
           };
-        }
+        })
       ] ++ modules;
     });
   in {

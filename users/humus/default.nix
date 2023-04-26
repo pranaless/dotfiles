@@ -31,20 +31,16 @@
     home.stateVersion = "22.05";
 
     home.packages = with pkgs; [
-      bc
       brightnessctl
       cozette
-      fd
       fira-code
       eww-wayland
-      git
       grim
       imv
       keepassxc
       librewolf-wayland
       mpv
       pavucontrol
-      ripgrep
       # river
       slurp
       swww
