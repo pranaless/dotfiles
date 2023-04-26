@@ -17,63 +17,63 @@
       inherit self home-manager;
       inherit (nixpkgs) lib;
     };
-    mkHosts = with nixpkgs.lib; let
-      extendLib = l: l.extend (_: _: { dl = lib; });
-    in builtins.mapAttrs (hostName: {
-      system,
-      # flakes ? {},
-      modules ? []
-    }: let
-      # flakesPkgs = builtins.mapAttrs (_: flake: flake.packages.${system}) flakes;
-    in nixosSystem {
-      inherit system;
-      lib = extendLib nixpkgs.lib;
-      modules = [
-        home-manager.nixosModules.default
-        ./modules
-        {
-          config = {
-            nixpkgs.overlays = [
-              (self: super: {
-                lib = extendLib super.lib;
-              })
-              (import ./pkgs)
-              # (self: super: flakesPkgs)
-            ];
-            nix.settings = {
-              trusted-users = [ "@wheel" ];
-              experimental-features = [ "nix-command" "flakes" ];
-              sandbox = true;
-            };
-            home-manager = {
-              useUserPackages = true;
-              useGlobalPkgs = true;
-            };
-            system.configurationRevision = mkIf (self ? rev) self.rev;
+    baseModules = [
+      home-manager.nixosModules.default
+      ./modules
+      ({ pkgs, lib, ... }: {
+        config = {
+          nixpkgs.overlays = [ (import ./pkgs) ];
+          nix.settings = {
+            trusted-users = [ "@wheel" ];
+            experimental-features = [ "nix-command" "flakes" ];
+            sandbox = true;
           };
-        }
-        ({ pkgs, ... }: {
-          config = {
-            boot.loader.systemd-boot.enable = mkDefault true;
-            boot.loader.efi.canTouchEfiVariables = mkDefault true;
-
-            networking.hostName = hostName;
-
-            environment.systemPackages = with pkgs; [
-              bc
-              fd
-              git
-              ripgrep
-            ];
+          home-manager = {
+            useUserPackages = true;
+            useGlobalPkgs = true;
           };
-        })
-      ] ++ modules;
-    });
+          system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+
+          boot.loader.systemd-boot.enable = lib.mkDefault true;
+          boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
+
+          environment.systemPackages = with pkgs; [
+            bc
+            fd
+            git
+            ripgrep
+          ];
+        };
+      })
+    ];
+    mkHosts = with nixpkgs.lib; flip pipe [
+      (builtins.map (v: import v inputs))
+      (builtins.map ({
+        hostName,
+        system,
+        modules ? [],
+      }: {
+        name = hostName;
+        value = let
+          extendLib = l: l.extend (_: _: { dl = lib; });
+        in nixpkgs.lib.nixosSystem {
+          inherit system;
+          lib = extendLib nixpkgs.lib;
+          modules = baseModules ++ [
+            ({ lib, ... }: {
+              nixpkgs.overlays = [ (_: super: { lib = extendLib super.lib; }) ];
+              networking.hostName = hostName;
+            })
+          ] ++ modules;
+        };
+      }))
+      builtins.listToAttrs
+    ];
   in {
     inherit lib;
   
-    nixosConfigurations = mkHosts {
-      humus = import ./hosts/humus inputs;
-    };
+    nixosConfigurations = mkHosts [
+      ./hosts/humus
+    ];
   };
 }

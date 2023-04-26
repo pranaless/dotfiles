@@ -1,6 +1,6 @@
 { self, nixpkgs, hyprland, ... }:
 {
-  # hostName = "humus";
+  hostName = "humus";
   system = "x86_64-linux";
   modules = [
     hyprland.nixosModules.default
