@@ -34,6 +34,7 @@
           };
           system.configurationRevision = lib.mkIf (self ? rev) self.rev;
 
+          boot.kernelPackages = pkgs.linuxPackages_latest;
           boot.loader.systemd-boot.enable = lib.mkDefault true;
           boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
