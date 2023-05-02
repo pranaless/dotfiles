@@ -43,6 +43,7 @@
             git
             ripgrep
           ];
+          environment.defaultPackages = [ ];
         };
       })
     ];
@@ -56,7 +57,7 @@
         name = hostName;
         value = let
           extendLib = l: l.extend (_: _: { dl = lib; });
-        in nixpkgs.lib.nixosSystem {
+        in nixosSystem {
           inherit system;
           lib = extendLib nixpkgs.lib;
           modules = baseModules ++ [
