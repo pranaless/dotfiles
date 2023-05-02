@@ -1,4 +1,4 @@
-{ self, lib, home-manager }:
+{ self, lib }:
 with lib;
 let
   importLibFile = f: import f { inherit lib; self = self.lib; };

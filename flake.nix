@@ -14,7 +14,7 @@
   outputs = { self, nixpkgs, home-manager, hyprland }@inputs:
   let
     lib = import ./lib {
-      inherit self home-manager;
+      inherit self;
       inherit (nixpkgs) lib;
     };
     baseModules = [
