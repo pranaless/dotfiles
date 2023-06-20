@@ -41,6 +41,8 @@
     ({ pkgs, ... }: {
       networking.networkmanager.enable = true;
 
+      networking.firewall.allowedTCPPorts = [ 25565 ];
+
       security.rtkit.enable = true;
       services.pipewire = {
         enable = true;
