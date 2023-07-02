@@ -4,6 +4,7 @@
   system = "x86_64-linux";
   modules = [
     hyprland.nixosModules.default
+    ./hardware-configuration.nix
     ../../users/humus
     {
       nixpkgs.config.allowUnfree = true;
@@ -14,22 +15,11 @@
       system.stateVersion = "22.05";
     }
     ({ pkgs, ... }: {
-      imports = [ # Include the results of the hardware scan.
-        ./hardware-configuration.nix
-      ];
-
       # Not sure if this actually helps?
       boot.initrd.availableKernelModules = [
         "aesni_intel"
         "cryptd"
       ];
-
-      fileSystems = {
-        "/".options = [ "compress=zstd" ];
-        "/home".options = [ "compress=zstd" ];
-        "/nix".options = [ "compress=zstd" "noatime" ];
-      };
-      swapDevices = [ { device = "/swap"; } ];
 
       environment.systemPackages = with pkgs; [
         btrfs-progs
@@ -95,6 +85,7 @@
           eww-wayland
           keepassxc
           librewolf-wayland
+          noto-fonts
           swww
           wlsunset
           zathura
