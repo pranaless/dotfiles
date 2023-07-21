@@ -11,7 +11,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
     lib = import ./lib {
       inherit self;
@@ -22,7 +22,6 @@
       ./modules
       ({ pkgs, lib, ... }: {
         config = {
-          nixpkgs.overlays = [ (import ./pkgs) ];
           nix.settings = {
             trusted-users = [ "@wheel" ];
             experimental-features = [ "nix-command" "flakes" ];
@@ -34,7 +33,7 @@
           };
           system.configurationRevision = lib.mkIf (self ? rev) self.rev;
 
-          boot.kernelPackages = pkgs.linuxPackages_latest;
+          boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
           boot.loader.systemd-boot.enable = lib.mkDefault true;
           boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
