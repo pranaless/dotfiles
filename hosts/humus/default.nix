@@ -156,8 +156,6 @@
             }
 
             animations {
-              enable = true
-
               bezier = myBezier, 0.05, 0.9, 0.1, 1.05
               animation = windows, 1, 7, myBezier
               animation = windowsOut, 1, 7, default, popin 80%
@@ -265,10 +263,13 @@
           enable = true;
           settings = {
             theme = "catppuccin_mocha";
-            editor.line-number = "relative";
-            editor.cursor-shape = {
-              insert = "bar";
-              normal = "block";
+            editor = {
+              line-number = "relative";
+              cursor-shape = {
+                insert = "bar";
+                normal = "block";
+              };
+              bufferline = "multiple";
             };
           };
         };
