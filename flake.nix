@@ -13,13 +13,8 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
-    lib = import ./lib {
-      inherit self;
-      inherit (nixpkgs) lib;
-    };
     baseModules = [
       home-manager.nixosModules.default
-      ./modules
       ({ pkgs, lib, ... }: {
         config = {
           nix.settings = {
@@ -55,24 +50,18 @@
         modules ? [],
       }: {
         name = hostName;
-        value = let
-          extendLib = l: l.extend (_: _: { dl = lib; });
-        in nixosSystem {
+        value = nixosSystem {
           inherit system;
-          lib = extendLib nixpkgs.lib;
           modules = baseModules ++ [
-            ({ lib, ... }: {
-              nixpkgs.overlays = [ (_: super: { lib = extendLib super.lib; }) ];
+            {
               networking.hostName = hostName;
-            })
+            }
           ] ++ modules;
         };
       }))
       builtins.listToAttrs
     ];
   in {
-    inherit lib;
-  
     nixosConfigurations = mkHosts [
       ./hosts/humus
     ];
