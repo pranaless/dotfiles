@@ -88,6 +88,8 @@
           keepassxc
           librewolf-wayland
           noto-fonts
+          noto-fonts-emoji
+          noto-fonts-cjk-serif
           swww
           wlsunset
           zathura
