@@ -53,15 +53,10 @@
       services.openssh = {
         enable = true;
       };
-      programs.ssh = {
-        startAgent = true;
-      };
 
       environment.systemPackages = with pkgs; [
         brightnessctl
         grim
-        imv
-        mpv
         pavucontrol
         slurp
         wf-recorder
@@ -86,7 +81,6 @@
           fira-code
           eww-wayland
           keepassxc
-          librewolf-wayland
           noto-fonts
           noto-fonts-emoji
           noto-fonts-cjk-serif
@@ -103,8 +97,15 @@
 
         services.syncthing.enable = true;
 
-        programs.gpg.enable = true;
+        services.ssh-agent.enable = true;
         services.gpg-agent.enable = true;
+
+        programs.gpg.enable = true;
+
+        services.mako = {
+          enable = true;
+          font = "Cozette 10";
+        };
 
         services.mpd = {
           enable = true;
@@ -116,6 +117,7 @@
             }
           '';
         };
+
         programs.ncmpcpp = {
           enable = true;
           settings = {
@@ -203,15 +205,15 @@
             bind = SUPER, up,    movefocus, u
             bind = SUPER, down,  movefocus, d
 
-            ${builtins.concatStringsSep "" (builtins.genList
+            ${builtins.concatStringsSep "\n" (builtins.genList
               (i: let
                 k = builtins.toString i;
                 ws = if i == 0 then "10" else builtins.toString i;
               in ''
                 bind = SUPER, ${k}, workspace, ${ws}
-                bind = SUPER SHIFT, ${k}, movetoworkspace, ${ws}
-              '')
+                bind = SUPER SHIFT, ${k}, movetoworkspace, ${ws}'')
               10)}
+
             bindm = SUPER, mouse:272, movewindow
             bindm = SUPER, mouse:273, resizewindow
           '';
@@ -273,9 +275,17 @@
           };
         };
 
-        services.mako = {
+        programs.imv = {
           enable = true;
-          font = "Cozette 10";
+        };
+
+        programs.mpv = {
+          enable = true;
+        };
+
+        programs.librewolf = {
+          enable = true;
+          package = pkgs.librewolf-wayland;
         };
       };
 
