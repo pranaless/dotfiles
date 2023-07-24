@@ -155,8 +155,8 @@
               blur_passes = 4
               blur_ignore_opacity = true
 
-              active_opacity = 0.8
-              inactive_opacity = 0.6
+              active_opacity = 0.95
+              inactive_opacity = 0.85
             }
 
             animations {
