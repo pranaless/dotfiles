@@ -4,6 +4,7 @@
   system = "x86_64-linux";
   modules = [
     ./hardware-configuration.nix
+    ./users/pranaless
     {
       nixpkgs.config.allowUnfree = true;
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
