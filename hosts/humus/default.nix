@@ -1,8 +1,9 @@
-{ self, nixpkgs, hyprland, ... }:
-{
+{ self, nixpkgs, agenix, hyprland, ... }:
+rec {
   hostName = "humus";
   system = "x86_64-linux";
   modules = [
+    agenix.nixosModules.default
     ./hardware-configuration.nix
     ./users/pranaless
     {
@@ -21,6 +22,7 @@
       ];
 
       environment.systemPackages = with pkgs; [
+        agenix.packages.${system}.default
         btrfs-progs
       ];
 
